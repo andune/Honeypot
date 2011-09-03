@@ -1,4 +1,3 @@
-
 package com.argo.bukkit.honeypot;
 
 import org.bukkit.event.block.Action;

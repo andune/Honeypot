@@ -1,4 +1,3 @@
-
 package com.argo.bukkit.honeypot;
 
 import org.bukkit.ChatColor;
@@ -26,9 +25,9 @@ public class HoneypotBlockListener extends BlockListener {
     			event.setCancelled(true);
 
     			if(Settings.getKickFlag())
-    				BansHandler.kick(player, "[Honeypot]", Settings.getPotMsg());
+    				BansHandler.kick(player, Settings.getPotSend(), Settings.getPotMsg());
     			else if(Settings.getBanFlag())
-    				BansHandler.ban(player, "[Honeypot]", Settings.getPotMsg());
+    				BansHandler.ban(player, Settings.getPotSend(), Settings.getPotRea());
 
     			if(Settings.getLogFlag()) {
     				String loc = block.getLocation().getBlockX() + ", " +  block.getLocation().getBlockY() + ", " +  block.getLocation().getBlockZ();

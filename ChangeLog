@@ -1,3 +1,10 @@
+v0.7.2 - Sept 2, 2011
+- added support for vanilla and EasyBan
+- added 'honeypotBanReason' config option (ban reason for EB and MCBANS), defaults to "Destroyed honeypot block."
+- added 'kickBanSender' config option (who banning, kicking - only MCBANS), defaults to "[Honeypot]"
+- added 'doLoc' config option (location of player into ban reason, all ban systems), defaults to "false"
+- code cleanup
+
 v0.7.1 - July 3, 2011
 - added 'logpath' config option, defaults to "plugins/Honeypot/honeypot.log"
 
