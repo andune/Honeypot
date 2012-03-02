@@ -20,8 +20,6 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 import ru.tehkode.permissions.PermissionUser;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
 
-import com.nijiko.permissions.PermissionHandler;
-import com.nijikokun.bukkit.Permissions.Permissions;
 import com.sk89q.wepif.PermissionsResolverManager;
 
 /** Permission abstraction class, use Vault, WEPIF, Perm2 or superperms, depending on what's available.
@@ -30,9 +28,8 @@ import com.sk89q.wepif.PermissionsResolverManager;
  *   Vault 1.x: http://dev.bukkit.org/server-mods/vault/
  *   WorldEdit 5.x: http://build.sk89q.com/
  *   PermissionsEx: http://goo.gl/jthCz
- *   Permissions 2.7 or 3.x: http://goo.gl/liHFt (2.7) or http://goo.gl/rn4LP (3.x) 
  * 
- * @author morganm
+ * @author morganm, dwdcweb
  *
  */
 public class PermissionSystem {
@@ -55,7 +52,6 @@ public class PermissionSystem {
 	
     private net.milkbowl.vault.permission.Permission vaultPermission = null;
     private PermissionsResolverManager wepifPerms = null;
-    private PermissionHandler perm2Handler;
     private PermissionsEx pex;
     
 	public PermissionSystem(JavaPlugin plugin, Logger log, String logPrefix) {
@@ -125,13 +121,6 @@ public class PermissionSystem {
 					break;
 				}
 			}
-			else if( "perm2".equalsIgnoreCase(system) || "perm2-compat".equalsIgnoreCase(system) ) {
-				if( setupPerm2() ) {
-					systemInUse = PERM2_COMPAT;
-		        	log.info(logPrefix+"using Perm2-compatible permissions");
-					break;
-				}
-			}
 			else if( "superperms".equalsIgnoreCase(system) ) {
 				systemInUse = SUPERPERMS;
 	        	log.info(logPrefix+"using Superperms permissions");
@@ -173,9 +162,6 @@ public class PermissionSystem {
     	case PEX:
     		permAllowed = pex.has(p, permission);
     		break;
-    	case PERM2_COMPAT:
-    		permAllowed = perm2Handler.has(p, permission);
-    		break;
     	case SUPERPERMS:
     		permAllowed = p.hasPermission(permission);
     		break;
@@ -200,9 +186,6 @@ public class PermissionSystem {
             PermissionUser user = PermissionsEx.getPermissionManager().getUser(player);
             if (user != null)
             	permAllowed = user.has(permission, world);
-    		break;
-    	case PERM2_COMPAT:
-    		permAllowed = perm2Handler.has(world, player, permission);
     		break;
     	case SUPERPERMS:
     	{
@@ -253,9 +236,6 @@ public class PermissionSystem {
             }
     		break;
     	}
-    	case PERM2_COMPAT:
-    		group = perm2Handler.getGroup(world, playerName);
-    		break;
     	
     	case SUPERPERMS:
     	{
@@ -320,15 +300,6 @@ public class PermissionSystem {
             if (player != null) perm = player;
         }
         return perm;
-    }
-
-    private boolean setupPerm2() {
-        Plugin permissionsPlugin = plugin.getServer().getPluginManager().getPlugin("Permissions");
-        if( permissionsPlugin != null ) {
-        	perm2Handler = ((Permissions) permissionsPlugin).getHandler();
-        }
-        	
-        return (perm2Handler != null);
     }
     
     private boolean setupVaultPermissions()

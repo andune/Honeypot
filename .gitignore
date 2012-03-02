@@ -3,3 +3,5 @@ bin
 lib
 .classpath
 .project
+/*.properties
+/*.project

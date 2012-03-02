@@ -1,0 +1,72 @@
+v1.2 - Feb 18, 2012
+* updated to latest Bukkit-1.1-R4 (RB #1938)
+* updated to new style Bukkit configuration
+* updated to new Bukkit event system
+* updated to modern Permission system, borrowed from my HSP plugin. Leverages
+Vault, WorldEdit, superperms, etc. It works out of the box, but if you want to
+do configuration as an admin, see documentation: http://goo.gl/TErPh
+* code cleanup: removed all System.out calls in favor of log.info
+
+v1.1 - Dec 3, 2011
+- added support for "/hp region" to record a WE region as a Honeypot. This
+is NOT intended as a WorldGuard replacement, use sparingly and intelligently.
+
+v1.0.3 - Nov 2, 2011
+- added support for "globalBan: true" option in config.yml to support McBans3
+automatic global bans - note this is ONLY supported for config.yml and
+McBans3 (don't try with old-style honeypot.properties or McBans2)
+
+v1.0.2 - Oct 30, 2011
+- added support for latest CB (#1368+)
+
+v1.0.1 - Sept 10, 2011
+- fixed MCBans3 support to report finding it correctly (it was finding and
+using it before, but was falsely reporting Vanilla on startup)
+
+v1.0 - Sept 5, 2011
+- initial (untested) MCBans3 support
+- added a timer related to the "offenseCount" code - if offenseCount is > 1
+and someone trips a Honeypot block but doesn't exceed the offenseCount, the
+code will reset the broken Honeypot blocks within 5 minutes of that player
+logging out.
+- added support for standard Bukkit config.yml file. If you have an existing
+old-style .properties file, Honeypot will still use that. If you don't, it
+will create and prefer a new-style Bukkit config.yml instead.
+- added support for "ban points", an advanced form of the offenseCount
+algorithm. Read documentation for more details. This feature is ONLY supported
+in new config.yml config syntax.
+- version bump to 1.0 since there were some major new features to justify more
+than a minor version bump and I think this plugin has been around and in use
+long enough to qualify for a non-beta version number
+
+v0.9 - Sept 4, 2011
+- removed support for SimpleBans
+- added support for KiwiAdmin plugin
+- changed the behaviour when player got kicked using EasyBan method (not banned)
+- source code format and cleanup
+
+v0.8 - Sept 3, 2011
+- Added an "offenseCount" parameter, which defines the number of Honeypot
+offenses before action is taken.  When action is taken, the Honeypot blocks
+that were broken are automatically rolled back. Defaults to 1, which is the
+previous default behavior (one block break = immediate action).
+
+v0.7.2 - Sept 2, 2011
+- added support for vanilla and EasyBan
+- added 'honeypotBanReason' config option (ban reason for EB and MCBANS), defaults to "Destroyed honeypot block."
+- added 'kickBanSender' config option (who banning, kicking - only MCBANS), defaults to "[Honeypot]"
+- added 'doLoc' config option (location of player into ban reason, all ban systems), defaults to "false"
+- code cleanup
+
+v0.7.1 - July 3, 2011
+- added 'logpath' config option, defaults to "plugins/Honeypot/honeypot.log"
+
+v0.7
+- fixed bug on saving that caused data file to be wiped out
+- made multiworld compatible
+- performance improvements, since this is called on every block break and
+was previously not very efficient for a large number of Honeypot blocks
+- added ant build script for building jar
+
+v6
+- last release by @aArgomirr

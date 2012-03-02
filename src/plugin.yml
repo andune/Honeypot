@@ -1,8 +1,8 @@
-name: Honeypot
+name: CandyBag
 main: com.argo.bukkit.honeypot.Honeypot
 version: 1.2
-author: Argomirr,morganm,dog.big
-softdepend: [MCBans, WorldEdit]
+author: Argomirr,morganm,dog.big,dwdcweb
+softdepend: [WorldEdit]
 commands:
  honeypot:
   description: Enables Op's to create honeypots by right clicking a block with a wooden axe.

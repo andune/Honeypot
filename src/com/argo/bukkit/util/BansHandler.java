@@ -8,11 +8,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.argo.bukkit.honeypot.Honeypot;
 import com.argo.bukkit.honeypot.config.Config;
-import com.firestar.mcbans.mcbans;
-import com.firestar.mcbans.mcbans_handler;
+/*
+ * removed do to inability to test it
+ * 
+
+import com.mcbans.firestar.mcbans.mcbans;
+import com.mcbans.firestar.mcbans.callBacks.*;
 import com.mcbans.firestar.mcbans.BukkitInterface;
 import com.mcbans.firestar.mcbans.pluginInterface.Ban;
 import com.mcbans.firestar.mcbans.pluginInterface.Kick;
+- dwdcweb 
+*/
 
 /** This class was originally all static methods (arrrrg)..  Refactored to be an instance so we can
  * pass in instance variables such as the Config object we're using.  It really should be re-written
@@ -20,7 +26,7 @@ import com.mcbans.firestar.mcbans.pluginInterface.Kick;
  * of the interface and let polymorphism determine which one is used at run-time as opposed to a
  * switch statement.  #OOPftw
  * 
- * @author Argomirr, morganm
+ * @author Argomirr, morganm, dwdcweb
  *
  */
 public class BansHandler {
@@ -28,8 +34,14 @@ public class BansHandler {
     @SuppressWarnings("unused")
 	private Honeypot plugin;
     private Config config;
+    
+    /*
+     * removed do to inability to test it
+     * 
+     * 
 	private BukkitInterface mcb3;
     private mcbans_handler mcb;
+    */
     private BansMethod bmethod = BansMethod.VANILLA; // default
 
     public BansHandler(Honeypot plugin) {
@@ -63,7 +75,10 @@ public class BansHandler {
                     getPlugin("kiwiadmin");
         }
 
-        if (testMCBans != null) {
+        /*
+         * removed do to inability to test it
+         *
+ 		if (testMCBans != null) {
         	if( testMCBans.getDescription().getVersion().startsWith("3") ) {
         		mcb3 = (BukkitInterface) testMCBans;
 	            bmethod = BansMethod.MCBANS3;
@@ -72,7 +87,9 @@ public class BansHandler {
 	            mcb = ((mcbans) testMCBans).mcb_handler;
 	            bmethod = BansMethod.MCBANS;
         	}
-        } else if (testEB != null) {
+        } else */
+        
+        if (testEB != null) {
             bmethod = BansMethod.EASYBAN;
         } else if (testKA != null) {
             bmethod = BansMethod.KABANS;
@@ -99,12 +116,16 @@ public class BansHandler {
                 p.kickPlayer(config.getPotMsg());
                 VanillaBan(p);
                 break;
+                /*
+                 * removed do to inability to test it
+                 *
             case MCBANS:
                 MCBan(p, sender, reason, "");
                 break;
             case MCBANS3:
             	MCBan3(p, sender, reason, "");
             	break;
+            	*/
             case EASYBAN:
                 // also fix for black screen after BAN
                 p.kickPlayer(config.getPotMsg());
@@ -124,12 +145,16 @@ public class BansHandler {
             case VANILLA:
                 p.kickPlayer(reason);
                 break;
+                /*
+                 * removed do to inability to test it
+                 *
             case MCBANS:
                 MCBanKick(p, sender, reason);
                 break;
             case MCBANS3:
             	MCBan3Kick(p, sender, reason);
             	break;
+            	*/
             case EASYBAN:
                 EBkick(p, reason);
                 break;
@@ -141,7 +166,9 @@ public class BansHandler {
                 break;
         }
     }
-
+/*
+ * removed do to inability to test it
+ *
     private void MCBan3(Player player, String sender, String reason, String type) {
         player.kickPlayer(reason); //kick for good measure
         
@@ -166,7 +193,7 @@ public class BansHandler {
     private void MCBanKick(Player player, String sender, String reason) {
         mcb.kick(player.getName(), sender, reason);
     }
-    
+   */ 
     private void EBkick(Player player, String reason) {
         Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(),
                 "ekick " + player.getName() + " " + reason);
