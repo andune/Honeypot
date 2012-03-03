@@ -12,7 +12,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import com.argo.util.PropertyHandler;
 
 public class PropertiesFile implements Config {
-    private static final String propertiesPath = "plugins/Honeypot/honeypot.properties";
+    private static final String propertiesPath = "plugins/CandyBag/candybag.properties";
 
     private int toolID = defaultToolID;
     private int offenseCount = 1;
@@ -22,7 +22,9 @@ public class PropertiesFile implements Config {
     private boolean doBan = false;
     private boolean doShout = true;
     private String honeypotMsg = defaultHoneypotMsg;
+    private String candybagMsg = defaultCandybagMsg;
     private String honeypotBanReason = defaultHoneypotBanReason;
+    private String candybagBanReason = defaultCandybagBanReason;
     private String kickBanSender = defaultKickBanSender;
     private String logPath = defaultLogPath;
 
@@ -35,7 +37,9 @@ public class PropertiesFile implements Config {
 		props.setInt("tool-id", defaultToolID);
 		props.setInt("offenseCount", offenseCount);
 		props.setString("honeypot-kick-msg", defaultHoneypotMsg);
+		props.setString("candybag-kick-msg", defaultCandybagMsg);
                 props.setString("honeypot-ban-reason", defaultHoneypotBanReason);
+                props.setString("candybag-ban-reason", defaultCandybagBanReason);
                 props.setString("sender-of-kickban", defaultKickBanSender); 
                 props.setBoolean("reason-with-loc", doLoc);
 		props.setBoolean("log-to-file", doLog);
@@ -50,7 +54,9 @@ public class PropertiesFile implements Config {
 		toolID = props.getInt("tool-id", defaultToolID);
 		offenseCount = props.getInt("offenseCount", offenseCount);
 		honeypotMsg = props.getString("honeypot-kick-msg", defaultHoneypotMsg);
+		candybagMsg = props.getString("candybag-kick-msg", defaultCandybagMsg);
                 honeypotBanReason = props.getString("honeypot-ban-reason", defaultHoneypotBanReason);
+                candybagBanReason = props.getString("honeypot-ban-reason", defaultCandybagBanReason);
                 kickBanSender = props.getString("sender-of-kickban", defaultKickBanSender);
                 doLoc = props.getBoolean("reason-with-loc", doLoc);
 		doLog = props.getBoolean("log-to-file", doLog);
@@ -73,9 +79,14 @@ public class PropertiesFile implements Config {
     public String getPotMsg() {
 	return honeypotMsg;
     }
-    
+    public String getBagMsg() {
+    	return candybagMsg;
+        }
     public String getPotReason() {
-	return honeypotBanReason;
+    	return honeypotBanReason;
+        }
+    public String getBagReason() {
+	return candybagBanReason;
     }
     
     public String getPotSender() {
@@ -113,7 +124,7 @@ public class PropertiesFile implements Config {
     public boolean isGlobalBan() {
     	return false;		// NOT SUPPORTED IN PROPERTIES FILE
     }
-
+    
     /*	NOT SUPPORTED IN PROPERTIES FILE.
      * 
      * (non-Javadoc)
@@ -133,4 +144,6 @@ public class PropertiesFile implements Config {
 	public Map<Integer, Integer> getBlockPointMap() {
 		return null;
 	}
+
+	
 }

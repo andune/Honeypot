@@ -48,15 +48,24 @@ public class YMLFile implements Config {
 	public String getPotMsg() {
 		return bukkitConfig.getString("honeypotKickMessage", defaultHoneypotMsg);
 	}
+	
+	@Override
+	public String getBagMsg() {
+		return bukkitConfig.getString("candybagKickMessage", defaultCandybagMsg);
+	}
 
 	@Override
 	public String getPotReason() {
 		return bukkitConfig.getString("honeypotBanReason", defaultHoneypotBanReason);
 	}
+	@Override
+	public String getBagReason() {
+		return bukkitConfig.getString("candybagBanReason", defaultCandybagBanReason);
+	}
 
 	@Override
 	public String getPotSender() {
-		return bukkitConfig.getString("honeypotKickBanSender", defaultKickBanSender);
+		return bukkitConfig.getString("candybagKickBanSender", defaultKickBanSender);
 	}
 
 	@Override

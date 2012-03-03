@@ -10,14 +10,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 /** Interface for configuration implementations to use.  Created to allow a seamless code transition
  * between the old properties file and native Bukkit "config.yml" configurations.
  * 
- * @author morganm
+ * @author morganm, dwdcweb
  *
  */
 public interface Config {
-    public static final String defaultHoneypotMsg = "[Honeypot] You have been caught destroying a honeypot block.";
-    public static final String defaultHoneypotBanReason = "Destroyed honeypot block.";  //ban reason (all ban systems)
-    public static final String defaultKickBanSender = "[Honeypot]"; //who will kick / ban when hp get destroyed? Only MCBANS, in other cases it will be Console !
-    public static final String defaultLogPath = "plugins/Honeypot/honeypot.log";
+    public static final String defaultHoneypotMsg = "[CandyBag] You have been caught destroying a block in a candy bag.";
+    public static final String defaultCandybagMsg = "[CandyBag] You have been caught placing a block in a candy bag.";
+    public static final String defaultHoneypotBanReason = "Destroyed block in a candy bag.";  //ban reason (all ban systems)
+    public static final String defaultCandybagBanReason = "Placed a block in a candy bag.";  //ban reason (all ban systems)
+    public static final String defaultKickBanSender = "[CandyBag]"; //who will kick / ban when hp get destroyed? Only MCBANS, in other cases it will be Console !
+    public static final String defaultLogPath = "plugins/CandyBag/candybag.log";
     public static final int defaultToolID = 271;
     
 	public void load(JavaPlugin plugin) throws Exception;
@@ -44,7 +46,9 @@ public interface Config {
     public Map<Integer, Integer> getBlockPointMap();
     
     public String getPotMsg();
+    public String getBagMsg();
     public String getPotReason();
+    public String getBagReason();
     public String getPotSender();
     public int getToolId();
 

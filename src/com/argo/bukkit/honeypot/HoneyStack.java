@@ -77,10 +77,10 @@ public class HoneyStack implements Runnable {
 			try {
 				BlockState bs = honeyBlocks.get(location);
 				bs.update(true);
-				log.info("[Honeypot] successfully rolled back Honeypot damage from player "+playerName+" at location "+Honeypot.prettyPrintLocation(location));
+				log.info("[Candybag] successfully rolled back Candybag damage from player "+playerName+" at location "+Honeypot.prettyPrintLocation(location));
 			}
 			catch(Exception e) {
-				log.warning("[Honeypot] error rolling back Honeypot block at location "+Honeypot.prettyPrintLocation(location));
+				log.warning("[Candybag] error rolling back Candybag damage at location "+Honeypot.prettyPrintLocation(location));
 				e.printStackTrace();
 			}
 		}

@@ -52,7 +52,7 @@ public class Honeyfarm {
 	 */
 	private static final int HASH_CUTOFF_BLOCKS = 5;
 	
-	private static final String potListPath = "plugins/Honeypot/list.ncsv";
+	private static final String potListPath = "plugins/CandyBag/list.ncsv";
 	private static String logPath;
 
 	private static List<Location> potsList = new ArrayList<Location>();
@@ -100,7 +100,7 @@ public class Honeyfarm {
 					{
 						World w = Honeypot.getCurrentInstance().getServer().getWorld(coord[0]);
 						if( w == null ) {
-							log.warning("[Honeypot] Skipping line "+line+": no World defined for world "+coord[0]);
+							log.warning("[CandyBag] Skipping line "+line+": no World defined for world "+coord[0]);
 							continue;
 						}
 	
@@ -111,7 +111,7 @@ public class Honeyfarm {
 						// for backwards compatibility, if no world specified, just assume "world"
 						World w = Honeypot.getCurrentInstance().getServer().getWorld("world");
 						if( w == null ) {
-							log.warning("[Honeypot] Skipping line "+line+": line using old-style definition, tried to assume for world \"world\", but no \"world\" found");
+							log.warning("[CandyBag] Skipping line "+line+": line using old-style definition, tried to assume for world \"world\", but no \"world\" found");
 							continue;
 						}
 	
@@ -119,7 +119,7 @@ public class Honeyfarm {
 						potsMap.put(new Location(w, new Double(coord[0]), new Double(coord[1]), new Double(coord[2])), Boolean.TRUE);
 					}
 					else
-						log.warning("[Honeypot] Skipping line "+line+": incorrect number of data elements");
+						log.warning("[CandyyBag] Skipping line "+line+": incorrect number of data elements");
 				}
 			}
 			

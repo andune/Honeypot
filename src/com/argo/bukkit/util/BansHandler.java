@@ -29,6 +29,7 @@ import com.mcbans.firestar.mcbans.pluginInterface.Kick;
  * @author Argomirr, morganm, dwdcweb
  *
  */
+//TODO: restore MCBAN compatibilities
 public class BansHandler {
 
     @SuppressWarnings("unused")
@@ -43,6 +44,7 @@ public class BansHandler {
     private mcbans_handler mcb;
     */
     private BansMethod bmethod = BansMethod.VANILLA; // default
+    public static String methodName;
 
     public BansHandler(Honeypot plugin) {
     	this.plugin = plugin;
@@ -53,10 +55,12 @@ public class BansHandler {
         // Check for MCBans
         Plugin testMCBans = plugin.getServer().getPluginManager().
                 getPlugin("mcbans");
+        methodName = "mcbans";
         if (testMCBans == null) //Compatibility for older MCBans releases
         {
             testMCBans = plugin.getServer().getPluginManager().
                     getPlugin("MCBans");
+            methodName = "MCBans";
         }
         // Check for EasyBans
         Plugin testEB = plugin.getServer().getPluginManager().
@@ -65,6 +69,7 @@ public class BansHandler {
         {
             testEB = plugin.getServer().getPluginManager().
                     getPlugin("easyban");
+            methodName = "easybans";
         }
         // Check for KiwiAdmin
         Plugin testKA = plugin.getServer().getPluginManager().
@@ -73,6 +78,7 @@ public class BansHandler {
         {
             testKA = plugin.getServer().getPluginManager().
                     getPlugin("kiwiadmin");
+            methodName = "kiwiadmin";
         }
 
         /*

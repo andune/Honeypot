@@ -1,6 +1,6 @@
 name: CandyBag
 main: com.argo.bukkit.honeypot.Honeypot
-version: 1.2
+version: 0.5
 author: Argomirr,morganm,dog.big,dwdcweb
 softdepend: [WorldEdit]
 commands:

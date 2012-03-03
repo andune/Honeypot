@@ -29,7 +29,7 @@ public class Honeypot extends JavaPlugin {
     private PermissionSystem perm;
 
     public void log(final String message) {
-    	log.info("[Honeypot] "+message);
+    	log.info("[CandyBag] "+message);
     }
     
     /** I think there's a correct "PluginManager" way to get plugin instances, but
@@ -45,7 +45,7 @@ public class Honeypot extends JavaPlugin {
         instance = this;
         honeyStack = new HoneyStack();
 
-        perm = new PermissionSystem(this, log, "[Honeypot] ");
+        perm = new PermissionSystem(this, log, "[CandyBag] ");
         perm.setupPermissions();
         
         createDirs();
@@ -113,8 +113,8 @@ public class Honeypot extends JavaPlugin {
     	// bad code, we break the interface abstraction by looking for implementation-specific
     	// details, but I'm OK with this since this is intended simply as temporary a
     	// transition from the old properties file to new-style config.yml
-    	File newFile = new File("plugins/Honeypot/config.yml");
-    	File oldFile = new File("plugins/Honeypot/honeypot.properties");
+    	File newFile = new File("plugins/CandyBag/config.yml");
+    	File oldFile = new File("plugins/CandyBag/honeypot.properties");
     	
     	if( newFile.exists() ) {		// new-style config.yml exists?  use it
     		config = new YMLFile();
@@ -144,7 +144,7 @@ public class Honeypot extends JavaPlugin {
     public BansHandler getBansHandler() { return bansHandler; }
     
     public void createDirs() {
-        new File("plugins/Honeypot").mkdir();
+        new File("plugins/CandyBag").mkdir();
     }
 
     public String getLogPath() {
@@ -154,7 +154,7 @@ public class Honeypot extends JavaPlugin {
     public HoneyStack getHoneyStack() {
         return honeyStack;
     }
-
+  
     public static String prettyPrintLocation(Location l) {
         return "{world=" + l.getWorld().getName() + ", x=" + l.getBlockX() +
                 ", y=" + l.getBlockY() + ", z=" + l.getBlockZ() + "}";

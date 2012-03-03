@@ -6,15 +6,18 @@ shoutFlag: true
 # set to true for MCBans global bans. Be sure to follow their
 # guidelines:
 # http://wiki.mcbans.com/display/MCBans/Honeypot+Guidelines
+# MCBans is not functional atm.
 globalBan: false
 
 banLog: true
 banLogLocation: true
-logPath: plugins/Honeypot/honeypot.log
+logPath: plugins/Candybag/candybag.log
 
-honeypotKickBanSender: '[Honeypot]'
-honeypotBanReason: Destroyed honeypot block.
-honeypotKickMessage: '[Honeypot] You have been caught destroying a honeypot block.'
+candybagKickBanSender: '[CandyBag]'
+honeypotBanReason: Destroyed block in a candy bag.
+candybagBanReason: Placed block in a candy bag.
+honeypotKickMessage: '[CandyBag] You have been caught destroying a block in a candy bag.'
+candybagKickMessage: '[CandyBag] You have been caught placing a block in a candy bag.'
 
 # can be used in lieu of "offensePoints", is a simpler concept.
 # Basically counts each block break as one infraction so, for
@@ -49,6 +52,5 @@ permissions:
   - vault
   - wepif
   - pex
-  - perm2-compat
   - superperms
   - ops
