@@ -1,6 +1,6 @@
 name: Honeypot
 main: com.argo.bukkit.honeypot.Honeypot
-version: 1.2
+version: 1.3
 author: Argomirr,morganm,dog.big
 softdepend: [MCBans, WorldEdit]
 commands:

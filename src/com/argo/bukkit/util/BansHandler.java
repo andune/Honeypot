@@ -62,6 +62,14 @@ public class BansHandler {
             testKA = plugin.getServer().getPluginManager().
                     getPlugin("kiwiadmin");
         }
+        // Check for UltraBan
+        Plugin testUB = plugin.getServer().getPluginManager().
+                getPlugin("UltraBan");
+        if (testUB == null) //Compatibility for older bad-releases
+        {
+            testUB = plugin.getServer().getPluginManager().
+                    getPlugin("ultraban");
+        }
 
         if (testMCBans != null) {
         	if( testMCBans.getDescription().getVersion().startsWith("3") ) {
@@ -76,6 +84,8 @@ public class BansHandler {
             bmethod = BansMethod.EASYBAN;
         } else if (testKA != null) {
             bmethod = BansMethod.KABANS;
+        } else if (testUB != null) {
+            bmethod = BansMethod.UBAN;    
         } else {
             bmethod = BansMethod.VANILLA;
         }
@@ -113,6 +123,9 @@ public class BansHandler {
             case KABANS:
                 KAban(p, reason);
                 break;
+            case UBAN:
+                Uban(p, reason);
+                break;
             default:
                 break;
         }
@@ -136,6 +149,9 @@ public class BansHandler {
             case KABANS:
                 KAkick(p, reason);
                 break;
+            case UBAN:
+                Ukick(p, reason);
+                break;    
             default:
                 p.kickPlayer(reason);
                 break;
@@ -175,7 +191,12 @@ public class BansHandler {
     private void KAkick(Player player, String reason) {
         Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(),
                 "kick " + player.getName() + " " + reason);
-    }    
+    } 
+    
+    private void Ukick(Player player, String reason) {
+        Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(),
+                "kick " + player.getName() + " " + reason);
+    }
 
     private void VanillaBan(Player player) {
         Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(),
@@ -190,5 +211,10 @@ public class BansHandler {
     private void KAban(Player player, String reason) {
         Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(),
                 "ban " + player.getName() + " " + reason);
+    }
+    
+    private void Uban(Player player, String reason) {
+        Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(),
+                "ipban " + player.getName() + " " + reason);
     }
 }

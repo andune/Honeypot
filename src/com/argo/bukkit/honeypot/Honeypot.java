@@ -74,6 +74,9 @@ public class Honeypot extends JavaPlugin {
             case KABANS:
                 log("KiwiAdmin plugin found, using that.");
                 break;
+            case UBAN:
+                log("UltraBan plugin found, using that.");
+                break;    
             default:
                 log("Didn't find ban plugin, using vanilla.");
                 break;

@@ -4,6 +4,7 @@ public enum BansMethod {
     MCBANS,
     EASYBAN,
     KABANS,
+    UBAN,
     VANILLA,
     MCBANS3
 }
