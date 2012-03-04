@@ -21,7 +21,9 @@ public class PropertyHandler extends Properties {
 	public String getString(String key, String def) {
 		return getProperty(key, def);
 	}
-
+	public Object getObject(String key, String def) {
+		return (Object) getProperty(key, def);
+	}
 	public boolean getBoolean(String key, boolean def) {
 		return Boolean.valueOf(getProperty(key, String.valueOf(def)));
 	}

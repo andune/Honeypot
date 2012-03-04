@@ -2,9 +2,11 @@ package com.argo.bukkit.honeypot.listener;
 
 import java.util.Map;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -23,6 +25,7 @@ public class HoneypotBlockListener implements Listener {
     private Honeypot plugin;
     private HoneyStack honeyStack;
     private Config config;
+    private CommandSender cSender = Bukkit.getConsoleSender();
 
     public HoneypotBlockListener(Honeypot instance) {
         plugin = instance;
@@ -33,6 +36,7 @@ public class HoneypotBlockListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockBreak(BlockBreakEvent event) {
         Block block = event.getBlock();
+        
 
         if (Honeyfarm.isPot(block.getLocation())) {
             Player player = event.getPlayer();
@@ -100,10 +104,10 @@ public class HoneypotBlockListener implements Listener {
                 event.setCancelled(true);
 
                 if (config.getKickFlag()) {
-                    plugin.getBansHandler().kick(player, config.getPotSender(), 
+                    plugin.getBansHandler().kick(player, cSender, config.getPotSender().toString() + " "+
                             config.getPotMsg());
                 } else if (config.getBanFlag()) {
-                	plugin.getBansHandler().ban(player, config.getPotSender(),
+                	plugin.getBansHandler().ban(player, cSender,config.getPotSender().toString() + " "+
                             config.getPotReason());
                 }
 
@@ -204,10 +208,10 @@ public class HoneypotBlockListener implements Listener {
                 event.setCancelled(true);
 
                 if (config.getKickFlag()) {
-                    plugin.getBansHandler().kick(player, config.getPotSender(), 
+                    plugin.getBansHandler().kick(player, cSender, config.getPotSender().toString() + " "+
                             config.getBagMsg());
                 } else if (config.getBanFlag()) {
-                	plugin.getBansHandler().ban(player, config.getPotSender(),
+                	plugin.getBansHandler().ban(player, cSender,config.getPotSender().toString() + " "+
                             config.getBagReason());
                 }
 

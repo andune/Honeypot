@@ -64,8 +64,8 @@ public class YMLFile implements Config {
 	}
 
 	@Override
-	public String getPotSender() {
-		return bukkitConfig.getString("candybagKickBanSender", defaultKickBanSender);
+	public Object getPotSender() {
+		return bukkitConfig.get("candybagKickBanSender",  defaultKickBanSender);
 	}
 
 	@Override
@@ -102,7 +102,7 @@ public class YMLFile implements Config {
 	public String getLogPath() {
 		return bukkitConfig.getString("logPath", defaultLogPath);
 	}
-
+	
 	@Override
 	public int getOffensePoints() {
 		return bukkitConfig.getInt("offensePoints", 0);

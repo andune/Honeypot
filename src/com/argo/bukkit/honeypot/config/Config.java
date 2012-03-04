@@ -14,13 +14,13 @@ import org.bukkit.plugin.java.JavaPlugin;
  *
  */
 public interface Config {
-    public static final String defaultHoneypotMsg = "[CandyBag] You have been caught destroying a block in a candy bag.";
-    public static final String defaultCandybagMsg = "[CandyBag] You have been caught placing a block in a candy bag.";
-    public static final String defaultHoneypotBanReason = "Destroyed block in a candy bag.";  //ban reason (all ban systems)
-    public static final String defaultCandybagBanReason = "Placed a block in a candy bag.";  //ban reason (all ban systems)
-    public static final String defaultKickBanSender = "[CandyBag]"; //who will kick / ban when hp get destroyed? Only MCBANS, in other cases it will be Console !
-    public static final String defaultLogPath = "plugins/CandyBag/candybag.log";
-    public static final int defaultToolID = 271;
+    public static String defaultHoneypotMsg = "[CandyBag] You have been caught destroying a block in a candy bag.";
+    public static String defaultCandybagMsg = "[CandyBag] You have been caught placing a block in a candy bag.";
+    public static String defaultHoneypotBanReason = "Destroyed block in a candy bag.";  //ban reason (all ban systems)
+    public static String defaultCandybagBanReason = "Placed a block in a candy bag.";  //ban reason (all ban systems)
+    public static Object defaultKickBanSender = "[CandyBag]"; //who will kick / ban when hp get destroyed? Only MCBANS, in other cases it will be Console !
+    public static String defaultLogPath = "plugins/CandyBag/candybag.log";
+    public static int defaultToolID = 271;
     
 	public void load(JavaPlugin plugin) throws Exception;
 	public void save() throws Exception;
@@ -49,7 +49,7 @@ public interface Config {
     public String getBagMsg();
     public String getPotReason();
     public String getBagReason();
-    public String getPotSender();
+    public Object getPotSender();
     public int getToolId();
 
     public boolean getKickFlag();

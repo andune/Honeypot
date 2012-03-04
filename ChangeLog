@@ -1,5 +1,9 @@
+v0.6 Mar 4, 2012
+* Changed config variables to public static do the fact it crashes if you reload it.
+* added banip to VINNILA bans
+* attempted to provide better explanation to bans and commandsender
 
-v0.5 Mar 3
+v0.5 Mar 3, 2012
 * Added/changed references in Config.java, HoneyStack.java so it will references to Candy bag areas for
   destroying of blocks and placement of blocks.
 * Changed the config system to include block placement
@@ -7,7 +11,7 @@ v0.5 Mar 3
 * Updated more author credits and credentials.
 * Create on block place lister
 
-v0.2 Mar 2
+v0.2 Mar 2, 2012
 * Forked from the original source at at https://github.com/morganm/Honeypot managed by morganm. Trying to
   contact authors to get permission to redistribute and adapt source as well permission adapt to a more 
   up to date license.

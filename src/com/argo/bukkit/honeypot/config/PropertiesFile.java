@@ -25,7 +25,7 @@ public class PropertiesFile implements Config {
     private String candybagMsg = defaultCandybagMsg;
     private String honeypotBanReason = defaultHoneypotBanReason;
     private String candybagBanReason = defaultCandybagBanReason;
-    private String kickBanSender = defaultKickBanSender;
+    private Object kickBanSender = defaultKickBanSender;
     private String logPath = defaultLogPath;
 
     public void load(JavaPlugin plugin) throws Exception {
@@ -33,14 +33,13 @@ public class PropertiesFile implements Config {
 
 	    if(!new File(propertiesPath).exists()) {
 		new File(propertiesPath).createNewFile();
-
 		props.setInt("tool-id", defaultToolID);
 		props.setInt("offenseCount", offenseCount);
 		props.setString("honeypot-kick-msg", defaultHoneypotMsg);
 		props.setString("candybag-kick-msg", defaultCandybagMsg);
                 props.setString("honeypot-ban-reason", defaultHoneypotBanReason);
                 props.setString("candybag-ban-reason", defaultCandybagBanReason);
-                props.setString("sender-of-kickban", defaultKickBanSender); 
+                props.getObject("sender-of-kickban", (String) defaultKickBanSender);
                 props.setBoolean("reason-with-loc", doLoc);
 		props.setBoolean("log-to-file", doLog);
                 props.setBoolean("kick", doKick);
@@ -57,7 +56,7 @@ public class PropertiesFile implements Config {
 		candybagMsg = props.getString("candybag-kick-msg", defaultCandybagMsg);
                 honeypotBanReason = props.getString("honeypot-ban-reason", defaultHoneypotBanReason);
                 candybagBanReason = props.getString("honeypot-ban-reason", defaultCandybagBanReason);
-                kickBanSender = props.getString("sender-of-kickban", defaultKickBanSender);
+                kickBanSender = props.getObject("sender-of-kickban", (String) defaultKickBanSender);
                 doLoc = props.getBoolean("reason-with-loc", doLoc);
 		doLog = props.getBoolean("log-to-file", doLog);
 		doKick = props.getBoolean("kick", doKick);
@@ -89,7 +88,7 @@ public class PropertiesFile implements Config {
 	return candybagBanReason;
     }
     
-    public String getPotSender() {
+    public Object getPotSender() {
 	return kickBanSender;
     }
 
@@ -120,7 +119,6 @@ public class PropertiesFile implements Config {
     public String getLogPath() {
     	return logPath;
     }
-    
     public boolean isGlobalBan() {
     	return false;		// NOT SUPPORTED IN PROPERTIES FILE
     }

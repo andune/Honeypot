@@ -1,6 +1,6 @@
 toolID: 269
-kickFlag: false
-banFlag: true
+kickFlag: true
+banFlag: false
 shoutFlag: true
 
 # set to true for MCBans global bans. Be sure to follow their

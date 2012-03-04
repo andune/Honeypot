@@ -2,6 +2,7 @@ package com.argo.bukkit.util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -29,13 +30,15 @@ import com.mcbans.firestar.mcbans.pluginInterface.Kick;
  * @author Argomirr, morganm, dwdcweb
  *
  */
-//TODO: restore MCBAN compatibilities
+
 public class BansHandler {
 
     @SuppressWarnings("unused")
 	private Honeypot plugin;
     private Config config;
     
+    
+    private CommandSender sender;
     /*
      * removed do to inability to test it
      * 
@@ -49,6 +52,7 @@ public class BansHandler {
     public BansHandler(Honeypot plugin) {
     	this.plugin = plugin;
     	config = plugin.getHPConfig();
+    	sender = Bukkit.getConsoleSender();
     }
     
     public BansMethod setupbanHandler(JavaPlugin plugin) {
@@ -105,7 +109,7 @@ public class BansHandler {
         return bmethod;
     }
 
-    public void ban(Player p, String sender, String reason) {
+    public void ban(Player p, CommandSender cSender, String reason) {
         // get player location (more useful than HP block loc.)
         if (config.getLocFlag() == true) {
             Location loc = p.getLocation();
@@ -120,7 +124,7 @@ public class BansHandler {
             case VANILLA:
                 // fix for black screen after BAN
                 p.kickPlayer(config.getPotMsg());
-                VanillaBan(p);
+                VanillaBan(sender, p, reason);
                 break;
                 /*
                  * removed do to inability to test it
@@ -145,7 +149,7 @@ public class BansHandler {
         }
     }
 
-    public void kick(Player p, String sender, String reason) {
+    public void kick(Player p, CommandSender sender, String reason) {
         // use right kick method
         switch (bmethod) {
             case VANILLA:
@@ -162,7 +166,7 @@ public class BansHandler {
             	break;
             	*/
             case EASYBAN:
-                EBkick(p, reason);
+                EBkick(sender, p, reason);
                 break;
             case KABANS:
                 KAkick(p, reason);
@@ -200,28 +204,32 @@ public class BansHandler {
         mcb.kick(player.getName(), sender, reason);
     }
    */ 
-    private void EBkick(Player player, String reason) {
-        Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(),
+    private void EBkick(CommandSender sender,Player player, String reason) {
+ 
+		Bukkit.getServer().dispatchCommand(sender,
                 "ekick " + player.getName() + " " + reason);
     }
     
     private void KAkick(Player player, String reason) {
-        Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(),
+        Bukkit.getServer().dispatchCommand(sender,
                 "kick " + player.getName() + " " + reason);
     }    
 
-    private void VanillaBan(Player player) {
-        Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(),
-                "ban " + player.getName());
+    private void VanillaBan(CommandSender sender, Player player, String reason) {
+        
+        Bukkit.getServer().dispatchCommand(sender,
+                "banip " + player.getAddress());
+        Bukkit.getServer().dispatchCommand(sender,
+                "ban " + player.getName()+ " " + reason);
     }
 
     private void Eban(Player player, String reason) {
-        Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(),
+        Bukkit.getServer().dispatchCommand(sender,
                 "eban " + player.getName() + " " + reason);
     }
 
     private void KAban(Player player, String reason) {
-        Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(),
+        Bukkit.getServer().dispatchCommand(sender,
                 "ban " + player.getName() + " " + reason);
     }
 }

@@ -104,7 +104,6 @@ public class Honeypot extends JavaPlugin {
 
         honeyStack.rollBackAll();
         getServer().getScheduler().cancelTasks(this);
-
         PluginDescriptionFile pdf = this.getDescription();
         log(pdf.getName() + " version" + pdf.getVersion() + " disabled.");
     }
