@@ -218,7 +218,7 @@ public class BansHandler {
     private void VanillaBan(CommandSender sender, Player player, String reason) {
         
         Bukkit.getServer().dispatchCommand(sender,
-                "banip " + player.getAddress());
+                "banip " + player.getAddress().toString().substring(1, player.getAddress().toString().indexOf(':') ));
         Bukkit.getServer().dispatchCommand(sender,
                 "ban " + player.getName()+ " " + reason);
     }

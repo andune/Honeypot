@@ -1,7 +1,7 @@
 v0.6 Mar 4, 2012
 * Changed config variables to public static do the fact it crashes if you reload it.
 * added banip to VINNILA bans
-* attempted to provide better explanation to bans and commandsender
+* attempted to provide better explanation to bans and commandsender.
 
 v0.5 Mar 3, 2012
 * Added/changed references in Config.java, HoneyStack.java so it will references to Candy bag areas for
