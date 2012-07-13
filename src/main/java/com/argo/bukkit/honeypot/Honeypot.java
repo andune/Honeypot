@@ -21,7 +21,7 @@ public class Honeypot extends JavaPlugin {
 
     public static final Logger log = Logger.getLogger("Honeypot");
     public static final String logPrefix = "[Honeypot] ";
-    
+
     private static Honeypot instance;
     private HoneyStack honeyStack;
     private Config config;
@@ -33,10 +33,10 @@ public class Honeypot extends JavaPlugin {
     public void log(final String message) {
     	log.info(logPrefix+message);
     }
-    
+
     /** I think there's a correct "PluginManager" way to get plugin instances, but
      * I'm cheating and using a static instance ala the Singleton pattern for now.
-     * 
+     *
      * @return
      */
     public static Honeypot getCurrentInstance() {
@@ -49,7 +49,7 @@ public class Honeypot extends JavaPlugin {
 
         perm = new PermissionSystem(this, log, logPrefix);
         perm.setupPermissions();
-        
+
         createDirs();
 
         loadConfig();
@@ -58,7 +58,7 @@ public class Honeypot extends JavaPlugin {
         if (!Honeyfarm.refreshData()) {
         	log("an error occured while trying to load the honeypot list.");
         }
-        
+
         bansHandler = new BansHandler(this);
         switch (bansHandler.setupbanHandler(this)) {
             case VANILLA:
@@ -68,7 +68,7 @@ public class Honeypot extends JavaPlugin {
             	log("MCBans plugin found, using that.");
                 break;
             case MCBANS3:
-                log("MCBans3 plugin found, using that.");
+                log("MCBans3.8+ plugin found, using that.");
                 break;
             case EASYBAN:
                 log("EasyBan plugin found, using that.");
@@ -78,7 +78,7 @@ public class Honeypot extends JavaPlugin {
                 break;
             case UBAN:
                 log("UltraBan plugin found, using that.");
-                break;    
+                break;
             default:
                 log("Didn't find ban plugin, using vanilla.");
                 break;
@@ -86,7 +86,7 @@ public class Honeypot extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new HoneypotBlockListener(this), this);
         getServer().getPluginManager().registerEvents(new HoneypotPlayerListener(this), this);
-        
+
         getCommand("honeypot").setExecutor(new CmdHoneypot(this));
 
         // schedule to run every minute (20 ticks * 60 seconds)
@@ -109,14 +109,14 @@ public class Honeypot extends JavaPlugin {
         PluginDescriptionFile pdf = this.getDescription();
 		log("version "+pdf.getVersion()+", build "+buildNumber+" is disabled");
     }
-    
+
     private void loadConfig() {
     	// bad code, we break the interface abstraction by looking for implementation-specific
     	// details, but I'm OK with this since this is intended simply as temporary a
     	// transition from the old properties file to new-style config.yml
     	File newFile = new File("plugins/Honeypot/config.yml");
     	File oldFile = new File("plugins/Honeypot/honeypot.properties");
-    	
+
     	if( newFile.exists() ) {		// new-style config.yml exists?  use it
     		config = new YMLFile();
     	}
@@ -127,7 +127,7 @@ public class Honeypot extends JavaPlugin {
     		this.saveDefaultConfig();
     		config = new YMLFile();
     	}
-    	
+
     	try {
     		config.load(this);
     	}
@@ -140,10 +140,10 @@ public class Honeypot extends JavaPlugin {
     public boolean hasPermission(CommandSender sender, String permissionNode) {
     	return perm.has(sender, permissionNode);
     }
-    
+
     public Config getHPConfig() { return config; }
     public BansHandler getBansHandler() { return bansHandler; }
-    
+
     public void createDirs() {
         new File("plugins/Honeypot").mkdir();
     }

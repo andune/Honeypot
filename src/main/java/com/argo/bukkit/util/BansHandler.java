@@ -17,7 +17,7 @@ import com.mcbans.firestar.mcbans.pluginInterface.Kick;
  * to use an Interface and each Ban type (mcbans, easyban, etc) should be their own implementation
  * of the interface and let polymorphism determine which one is used at run-time as opposed to a
  * switch statement.  #OOPftw
- * 
+ *
  * @author Argomirr, morganm
  *
  */
@@ -33,7 +33,7 @@ public class BansHandler {
     	this.plugin = plugin;
     	config = plugin.getHPConfig();
     }
-    
+
     public BansMethod setupbanHandler(JavaPlugin plugin) {
         // Check for MCBans
         Plugin testMCBans = plugin.getServer().getPluginManager().
@@ -70,16 +70,23 @@ public class BansHandler {
 
         if (testMCBans != null) {
         	// we only support version 3+ now, so dropped version test. - morganm 3/23/12
-//        	if( testMCBans.getDescription().getVersion().startsWith("3") ) {
-        		mcb3 = (BukkitInterface) testMCBans;
-	            bmethod = BansMethod.MCBANS3;
-//        	}
+        	try{
+        		double ver = testMCBans.getDescription().getVersion().trim();
+        		if (ver >= 3.8){
+        			mcb3 = (BukkitInterface) testMCBans;
+    	            bmethod = BansMethod.MCBANS3;
+        		}else{
+        			bmethod = BansMethod.VANILLA;
+        		}
+        	}catch (NumberFormatException ex){
+        		bmethod = BansMethod.VANILLA;
+        	}
         } else if (testEB != null) {
             bmethod = BansMethod.EASYBAN;
         } else if (testKA != null) {
             bmethod = BansMethod.KABANS;
         } else if (testUB != null) {
-            bmethod = BansMethod.UBAN;    
+            bmethod = BansMethod.UBAN;
         } else {
             bmethod = BansMethod.VANILLA;
         }
@@ -139,7 +146,7 @@ public class BansHandler {
                 break;
             case UBAN:
                 Ukick(p, reason);
-                break;    
+                break;
             default:
                 p.kickPlayer(reason);
                 break;
@@ -148,30 +155,32 @@ public class BansHandler {
 
     private void MCBan3(Player player, String sender, String reason, String type) {
         player.kickPlayer(reason); //kick for good measure
-        
+
         String banType = "localBan";
         // "localBan" or "globalBan" - need to make a config option
         if( config.isGlobalBan() )
         	banType = "globalBan";
-        	
+
         Ban banControl = new Ban( mcb3, banType, player.getName(), player.getAddress().toString(), sender, reason, "", "" );
-		banControl.start();
+        Thread triggerThread = new Thread(banControl);
+		triggerThread.start();
     }
     private void MCBan3Kick(Player player, String sender, String reason) {
 		Kick kickControl = new Kick( mcb3.Settings, mcb3, player.getName(), sender, reason );
-		kickControl.start();
+		Thread triggerThread = new Thread(kickControl);
+		triggerThread.start();
     }
-    
+
     private void EBkick(Player player, String reason) {
         Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(),
                 "ekick " + player.getName() + " " + reason);
     }
-    
+
     private void KAkick(Player player, String reason) {
         Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(),
                 "kick " + player.getName() + " " + reason);
-    } 
-    
+    }
+
     private void Ukick(Player player, String reason) {
         Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(),
                 "kick " + player.getName() + " " + reason);
@@ -191,7 +200,7 @@ public class BansHandler {
         Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(),
                 "ban " + player.getName() + " " + reason);
     }
-    
+
     private void Uban(Player player, String reason) {
         Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(),
                 "ipban " + player.getName() + " " + reason);
