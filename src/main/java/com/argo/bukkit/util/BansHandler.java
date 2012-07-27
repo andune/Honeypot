@@ -69,7 +69,8 @@ public class BansHandler {
         }
 
         if (testMCBans != null) {
-        	// we only support version 3+ now, so dropped version test. - morganm 3/23/12
+            // We only support version 3.8+ now, Dropped version test.
+            mcb3 = (BukkitInterface) testMCBans;
             bmethod = BansMethod.MCBANS3;
         } else if (testEB != null) {
             bmethod = BansMethod.EASYBAN;
