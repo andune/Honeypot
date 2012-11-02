@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.morganm</groupId>
   <artifactId>Honeypot</artifactId>
-  <version>1.4.2</version>
+  <version>1.4.3</version>
   <name>Honeypot</name>
   <description>HoneyPot plugin for catching griefers automatically</description>
   <url>http://dev.bukkit.org/server-mods/Honeypot/</url>
@@ -64,7 +64,7 @@
     <dependency>
       <groupId>org.bukkit</groupId>
       <artifactId>bukkit</artifactId>
-      <version>1.2.5-R4.0</version>
+      <version>1.4.2-R0.1</version>
     </dependency>
 
     <!-- Ban plugin dependencies -->

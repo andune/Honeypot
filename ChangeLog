@@ -1,3 +1,10 @@
+v1.4.3 - Nov 2, 2012
+* Merged support for block placement denial as part of Honeypot regions - thanks @BeastsMC!
+* Updated dependency & built against latest Bukkit beta 1.4.2-R0.1 (no practical difference, but somehow knowledge of this fact gives people the warm fuzzies - so there is your warm fuzzy folks)
+
+v1.4.2.1 - Jul 27, 2012
+* NPE fix for MCBans 3.8 support (kudos to @syamn again)
+
 v1.4.2 - Jul 26, 2012
 * Merged support for MCBans 3.8 from @syamn (thanks!). Please note this version will NOT work with version 3.7, stay on Honeypot 1.4.1 until you update to MCBans 3.8. This is UNTESTED by me, I'm simply taking the merge request on faith that it was tested to work. Please report back if you have issues.
 
