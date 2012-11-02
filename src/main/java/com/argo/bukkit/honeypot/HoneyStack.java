@@ -26,7 +26,7 @@ public class HoneyStack implements Runnable {
 	// keeps track of the total honeypot points this player has accumulated.  These
 	// are NOT the kind of points you want to be winning.  :P
 	private HashMap<String, Integer> honeypotPoints = new HashMap<String, Integer>();
-	
+	private HashMap<String, ArrayList<Location>> playerHoneyPlaces = new HashMap<String, ArrayList<Location>>();
 	private HashMap<String, ArrayList<Location>> playerHoneyBreaks = new HashMap<String, ArrayList<Location>>();
 	private HashMap<Location, BlockState> honeyBlocks = new HashMap<Location, BlockState>();
 	private HashMap<String, Long> playerLogouts = new HashMap<String, Long>();
@@ -61,14 +61,27 @@ public class HoneyStack implements Runnable {
 		
 		list.add(l);
 	}
-	
-	/** Roll back any HoneyPot blocks that were broken by a given player.
+	/** Called when a player places a block within a HoneyPot to record the broken block so we can roll it back later.
+	 * @param playerName
+	 * @param bs
+	 */	
+	public void placeHoneypot(String playerName, BlockState bs) {
+		Location l = bs.getBlock().getLocation();
+		ArrayList<Location> list = playerHoneyPlaces.get(playerName);
+		if( list == null ) {
+			list = new ArrayList<Location>();
+			playerHoneyPlaces.put(playerName, list);
+		}
+		list.add(l);
+	}
+	/** Roll back any HoneyPot blocks that were broken by a given player or blocks that were placed in a HoneyPot region by the player.
 	 * 
 	 * @param playerName
 	 */
 	public void rollBack(String playerName) {
 		ArrayList<Location> locations = playerHoneyBreaks.get(playerName);
-		if( locations == null )
+		ArrayList<Location> locations2 = playerHoneyPlaces.get(playerName);
+		if( locations == null || locations2 == null)
 			return;
 		
 		for(Location location : locations) {
@@ -84,7 +97,20 @@ public class HoneyStack implements Runnable {
 				e.printStackTrace();
 			}
 		}
-		
+		for(Location location : locations2) {
+			try {
+				//Check to make sure that the block was not previously broken.
+				//Without this, block placing can be exploited to destroy honeypots.
+				if(honeyBlocks.get(location) == null)
+					location.getBlock().setTypeId(0);
+				//Disregard logging, unimportant since placement is not a penalized action.
+			}
+			catch(Exception e) {
+				log.warning("[Honeypot] error rolling back Honeypot block at location "+Honeypot.prettyPrintLocation(location));
+				e.printStackTrace();
+			}
+		}
+		playerHoneyPlaces.remove(playerName);
 		playerHoneyBreaks.remove(playerName);
 		
 		// NOTE: we intentionally do NOT reset the "honeypotCount" for this player. This way if an admin
