@@ -1,4 +1,4 @@
-v1.4.3.1 - Nov 2, 2012
+v1.4.3.1 - Nov 14, 2012
 * fix bug in v1.4.3 that prevented rollbacks from happening (thanks @BeastMC for the fix)
 * verified to build against latest v1.4.4 dev Bukkit
 
