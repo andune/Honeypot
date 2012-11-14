@@ -81,9 +81,8 @@ public class HoneyStack implements Runnable {
 	public void rollBack(String playerName) {
 		ArrayList<Location> locations = playerHoneyBreaks.get(playerName);
 		ArrayList<Location> locations2 = playerHoneyPlaces.get(playerName);
-		if( locations == null || locations2 == null)
+		if( locations == null)
 			return;
-		
 		for(Location location : locations) {
 			// we try/catch so that even if one block fails (really shouldn't ever happen), the other
 			// ones can still go through.
@@ -97,6 +96,9 @@ public class HoneyStack implements Runnable {
 				e.printStackTrace();
 			}
 		}
+		playerHoneyBreaks.remove(playerName);
+		if( locations2 == null )
+			return;
 		for(Location location : locations2) {
 			try {
 				//Check to make sure that the block was not previously broken.
@@ -111,7 +113,6 @@ public class HoneyStack implements Runnable {
 			}
 		}
 		playerHoneyPlaces.remove(playerName);
-		playerHoneyBreaks.remove(playerName);
 		
 		// NOTE: we intentionally do NOT reset the "honeypotCount" for this player. This way if an admin
 		// is choosing to use "kick" intead of "ban", the player is insta-kicked if they log 	back in and
