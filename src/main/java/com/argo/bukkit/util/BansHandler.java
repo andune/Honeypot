@@ -8,9 +8,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.argo.bukkit.honeypot.Honeypot;
 import com.argo.bukkit.honeypot.config.Config;
-import com.mcbans.firestar.mcbans.BukkitInterface;
-import com.mcbans.firestar.mcbans.pluginInterface.Ban;
-import com.mcbans.firestar.mcbans.pluginInterface.Kick;
+import com.mcbans.firestar.mcbans.MCBans;
+import com.mcbans.firestar.mcbans.api.MCBansAPI;
 
 /** This class was originally all static methods (arrrrg)..  Refactored to be an instance so we can
  * pass in instance variables such as the Config object we're using.  It really should be re-written
@@ -26,7 +25,7 @@ public class BansHandler {
     @SuppressWarnings("unused")
 	private Honeypot plugin;
     private Config config;
-	private BukkitInterface mcb3;
+    private MCBansAPI mcbAPI;
     private BansMethod bmethod = BansMethod.VANILLA; // default
 
     public BansHandler(Honeypot plugin) {
@@ -37,12 +36,10 @@ public class BansHandler {
     public BansMethod setupbanHandler(JavaPlugin plugin) {
         // Check for MCBans
         Plugin testMCBans = plugin.getServer().getPluginManager().
-                getPlugin("mcbans");
-        if (testMCBans == null) //Compatibility for older MCBans releases
-        {
-            testMCBans = plugin.getServer().getPluginManager().
-                    getPlugin("MCBans");
-        }
+                getPlugin("MCBans");
+        // Only support 4.0+ MCBans, don't check "mcbans" plugin.
+        // "mcbans" is older version (3.x) name.
+
         // Check for EasyBans
         Plugin testEB = plugin.getServer().getPluginManager().
                 getPlugin("EasyBan");
@@ -69,9 +66,9 @@ public class BansHandler {
         }
 
         if (testMCBans != null) {
-            // We only support version 3.8+ now, Dropped version test.
-            mcb3 = (BukkitInterface) testMCBans;
-            bmethod = BansMethod.MCBANS3;
+            // We only support version 4.0+ now, Dropped version test.
+            mcbAPI = ((MCBans) testMCBans).getAPI(plugin);
+            bmethod = BansMethod.MCBANS4;
         } else if (testEB != null) {
             bmethod = BansMethod.EASYBAN;
         } else if (testKA != null) {
@@ -101,9 +98,9 @@ public class BansHandler {
                 p.kickPlayer(config.getPotMsg());
                 VanillaBan(p);
                 break;
-            case MCBANS3:
-            	MCBan3(p, sender, reason, "");
-            	break;
+            case MCBANS4:
+                MCBan4(p, sender, reason);
+                break;
             case EASYBAN:
                 // also fix for black screen after BAN
                 p.kickPlayer(config.getPotMsg());
@@ -126,9 +123,8 @@ public class BansHandler {
             case VANILLA:
                 p.kickPlayer(reason);
                 break;
-            case MCBANS3:
-            	MCBan3Kick(p, sender, reason);
-            	break;
+            case MCBANS4:
+                MCBan4Kick(p, sender, reason);
             case EASYBAN:
                 EBkick(p, reason);
                 break;
@@ -144,22 +140,15 @@ public class BansHandler {
         }
     }
 
-    private void MCBan3(Player player, String sender, String reason, String type) {
-        player.kickPlayer(reason); //kick for good measure
-
-        String banType = "localBan";
-        // "localBan" or "globalBan" - need to make a config option
-        if( config.isGlobalBan() )
-        	banType = "globalBan";
-
-        Ban banControl = new Ban( mcb3, banType, player.getName(), player.getAddress().toString(), sender, reason, "", "" );
-        Thread triggerThread = new Thread(banControl);
-		triggerThread.start();
+    private void MCBan4(Player player, String sender, String reason) {
+        if (config.isGlobalBan()){
+            mcbAPI.globalBan(player.getName(), sender, reason);
+        }else{
+            mcbAPI.localBan(player.getName(), sender, reason);
+        }
     }
-    private void MCBan3Kick(Player player, String sender, String reason) {
-		Kick kickControl = new Kick( mcb3.Settings, mcb3, player.getName(), sender, reason );
-		Thread triggerThread = new Thread(kickControl);
-		triggerThread.start();
+    private void MCBan4Kick(Player player, String sender, String reason) {
+        mcbAPI.kick(player.getName(), sender, reason);
     }
 
     private void EBkick(Player player, String reason) {

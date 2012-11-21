@@ -64,11 +64,8 @@ public class Honeypot extends JavaPlugin {
             case VANILLA:
             	log("Didn't find ban plugin, using vanilla.");
                 break;
-            case MCBANS:
-            	log("MCBans plugin found, using that.");
-                break;
-            case MCBANS3:
-                log("MCBans3.8+ plugin found, using that.");
+            case MCBANS4:
+                log("MCBans 4.0+ plugin found, using that.");
                 break;
             case EASYBAN:
                 log("EasyBan plugin found, using that.");
