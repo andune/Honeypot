@@ -1,3 +1,7 @@
+v1.4.3 - Nov 21, 2012
+* Merged support for MCBans 4.0 (thanks @syamn)
+* Note Honeypot v1.4.3 *ONLY* supports MCBans 4.0, if you haven't updated mcbans yet, then don't update Honeypot either
+
 v1.4.2 - Jul 26, 2012
 * Merged support for MCBans 3.8 from @syamn (thanks!). Please note this version will NOT work with version 3.7, stay on Honeypot 1.4.1 until you update to MCBans 3.8. This is UNTESTED by me, I'm simply taking the merge request on faith that it was tested to work. Please report back if you have issues.
 
