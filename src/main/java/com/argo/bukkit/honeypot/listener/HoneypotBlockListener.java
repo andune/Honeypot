@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 
 import com.argo.bukkit.honeypot.HoneyStack;
 import com.argo.bukkit.honeypot.Honeyfarm;
@@ -129,4 +130,24 @@ public class HoneypotBlockListener implements Listener {
             }
         }
     }
+/*
+ * Block placement must be handled. If it is not, then hollow structures protected by
+ * HoneyPot can have blocks placed within, modifying the structure and guardian blocks that
+ * were never intended to be trap.
+ * 
+ * Block placement is not counted at a violation, so it does not count towards the player's score.
+ */
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onBlockPlace(BlockPlaceEvent event) {
+        Block block = event.getBlock();
+
+        if (Honeyfarm.isPot(block.getLocation())) {
+            Player player = event.getPlayer();
+        	//I propose honeypot.place as a permission to allow some to place blocks within a honeypotted region
+            if( !plugin.hasPermission(player, "honeypot.place") ) {
+            	honeyStack.placeHoneypot(player.getName(), block.getState());
+            }
+        }
+    }
+
 }
