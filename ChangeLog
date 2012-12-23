@@ -1,6 +1,5 @@
-v1.4.4 - Nov 21, 2012
-* Merged support for MCBans 4.0 (thanks @syamn)
-* Note Honeypot v1.4.4 *ONLY* supports MCBans 4.0, if you haven't updated mcbans yet, then don't update Honeypot either
+v1.4.3.2 - Dec 23, 2012
+* MCBans 4.0 compatibility (thanks @Syamn!)
 
 v1.4.3.1 - Nov 14, 2012
 * fix bug in v1.4.3 that prevented rollbacks from happening (thanks @BeastMC for the fix)
