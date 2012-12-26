@@ -13,7 +13,8 @@ import com.argo.bukkit.honeypot.config.PropertiesFile;
 import com.argo.bukkit.honeypot.config.YMLFile;
 import com.argo.bukkit.honeypot.listener.HoneypotBlockListener;
 import com.argo.bukkit.honeypot.listener.HoneypotPlayerListener;
-import com.argo.bukkit.util.BansHandler;
+import com.argo.bukkit.util.BanHandler;
+import com.argo.bukkit.util.BanHandlerFactory;
 import com.argo.bukkit.util.JarUtils;
 import com.argo.bukkit.util.PermissionSystem;
 
@@ -25,7 +26,7 @@ public class Honeypot extends JavaPlugin {
     private static Honeypot instance;
     private HoneyStack honeyStack;
     private Config config;
-    private BansHandler bansHandler;
+    private BanHandler bansHandler;
     private PermissionSystem perm;
     private JarUtils jarUtils;
 	private int buildNumber = -1;
@@ -59,7 +60,11 @@ public class Honeypot extends JavaPlugin {
         	log("an error occured while trying to load the honeypot list.");
         }
 
-        bansHandler = new BansHandler(this);
+        BanHandlerFactory factory = new BanHandlerFactory(this, config);
+        bansHandler = factory.getBansHandler();
+        
+        /*
+        bansHandler = new OldBansHandler(this);
         switch (bansHandler.setupbanHandler(this)) {
             case VANILLA:
             	log("Didn't find ban plugin, using vanilla.");
@@ -80,6 +85,7 @@ public class Honeypot extends JavaPlugin {
                 log("Didn't find ban plugin, using vanilla.");
                 break;
         }
+        */
 
         getServer().getPluginManager().registerEvents(new HoneypotBlockListener(this), this);
         getServer().getPluginManager().registerEvents(new HoneypotPlayerListener(this), this);
@@ -139,7 +145,7 @@ public class Honeypot extends JavaPlugin {
     }
 
     public Config getHPConfig() { return config; }
-    public BansHandler getBansHandler() { return bansHandler; }
+    public BanHandler getBansHandler() { return bansHandler; }
 
     public void createDirs() {
         new File("plugins/Honeypot").mkdir();

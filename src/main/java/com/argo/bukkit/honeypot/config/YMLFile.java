@@ -14,6 +14,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.argo.bukkit.honeypot.Honeypot;
+import com.argo.bukkit.util.BanMethod;
 
 /**
  * @author morganm
@@ -39,6 +40,19 @@ public class YMLFile implements Config {
 		plugin.saveConfig();
 	}
 	
+    @Override
+    public BanMethod getBanSystem() {
+        String banSystemString = bukkitConfig.getString("banSystem", "ANY");
+        BanMethod banMethod = BanMethod.ANY;
+        try {
+            banMethod = BanMethod.valueOf(banSystemString);
+        }
+        catch(Exception e) {
+            log.warning("Invalid value \""+banSystemString+"\" for banSystem config parameter, defaulting to ANY");
+        }
+        return banMethod;
+    }
+
 	@Override
 	public int getOffenseCount() {
 		return bukkitConfig.getInt("offenseCount", 1);

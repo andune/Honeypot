@@ -7,6 +7,8 @@ import java.util.Map;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.argo.bukkit.util.BanMethod;
+
 /** Interface for configuration implementations to use.  Created to allow a seamless code transition
  * between the old properties file and native Bukkit "config.yml" configurations.
  * 
@@ -22,6 +24,13 @@ public interface Config {
     
 	public void load(JavaPlugin plugin) throws Exception;
 	public void save() throws Exception;
+	
+	/**
+	 * Return the Ban system requested by the admin.
+	 * 
+	 * @return
+	 */
+	public BanMethod getBanSystem();
 	
     public int getOffenseCount();
     

@@ -8,46 +8,27 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.argo.bukkit.honeypot.Honeypot;
 import com.argo.bukkit.honeypot.config.Config;
-import com.mcbans.firestar.mcbans.MCBans;
-import com.mcbans.firestar.mcbans.api.MCBansAPI;
 
-/** This class was originally all static methods (arrrrg)..  Refactored to be an instance so we can
- * pass in instance variables such as the Config object we're using.  It really should be re-written
- * to use an Interface and each Ban type (mcbans, easyban, etc) should be their own implementation
- * of the interface and let polymorphism determine which one is used at run-time as opposed to a
- * switch statement.  #OOPftw
+/** NO LONGER IN USE. Kept for reference while all the old ban system
+ * support is converted to new interface.
  *
- * @author Argomirr, morganm
+ * @author Argomirr, andune
  *
  */
-public class BansHandler {
+public class OldBansHandler {
 
     @SuppressWarnings("unused")
 	private Honeypot plugin;
     private Config config;
-    private MCBansAPI mcbAPI;
-    private BansMethod bmethod = BansMethod.VANILLA; // default
+    private BanMethod bmethod = BanMethod.VANILLA; // default
 
-    public BansHandler(Honeypot plugin) {
+    public OldBansHandler(Honeypot plugin) {
     	this.plugin = plugin;
     	config = plugin.getHPConfig();
     }
 
-    public BansMethod setupbanHandler(JavaPlugin plugin) {
-        // Check for MCBans
-        Plugin testMCBans = plugin.getServer().getPluginManager().
-                getPlugin("MCBans");
-        // Only support 4.0+ MCBans, don't check "mcbans" plugin.
-        // "mcbans" is older version (3.x) name.
+    public BanMethod setupbanHandler(JavaPlugin plugin) {
 
-        // Check for EasyBans
-        Plugin testEB = plugin.getServer().getPluginManager().
-                getPlugin("EasyBan");
-        if (testEB == null) //Compatibility for oldEasyBan release
-        {
-            testEB = plugin.getServer().getPluginManager().
-                    getPlugin("easyban");
-        }
         // Check for KiwiAdmin
         Plugin testKA = plugin.getServer().getPluginManager().
                 getPlugin("KiwiAdmin");
@@ -56,28 +37,9 @@ public class BansHandler {
             testKA = plugin.getServer().getPluginManager().
                     getPlugin("kiwiadmin");
         }
-        // Check for UltraBan
-        Plugin testUB = plugin.getServer().getPluginManager().
-                getPlugin("UltraBan");
-        if (testUB == null) //Compatibility for older bad-releases
-        {
-            testUB = plugin.getServer().getPluginManager().
-                    getPlugin("ultraban");
-        }
 
-        if (testMCBans != null) {
-            // We only support version 4.0+ now, Dropped version test.
-            mcbAPI = ((MCBans) testMCBans).getAPI(plugin);
-            bmethod = BansMethod.MCBANS4;
-        } else if (testEB != null) {
-            bmethod = BansMethod.EASYBAN;
-        } else if (testKA != null) {
-            bmethod = BansMethod.KABANS;
-        } else if (testUB != null) {
-            bmethod = BansMethod.UBAN;
-        } else {
-            bmethod = BansMethod.VANILLA;
-        }
+        if (testKA != null)
+            bmethod = BanMethod.KABANS;
         return bmethod;
     }
 
@@ -97,9 +59,6 @@ public class BansHandler {
                 // fix for black screen after BAN
                 p.kickPlayer(config.getPotMsg());
                 VanillaBan(p);
-                break;
-            case MCBANS4:
-                MCBan4(p, sender, reason);
                 break;
             case EASYBAN:
                 // also fix for black screen after BAN
@@ -123,8 +82,6 @@ public class BansHandler {
             case VANILLA:
                 p.kickPlayer(reason);
                 break;
-            case MCBANS4:
-                MCBan4Kick(p, sender, reason);
             case EASYBAN:
                 EBkick(p, reason);
                 break;
@@ -138,17 +95,6 @@ public class BansHandler {
                 p.kickPlayer(reason);
                 break;
         }
-    }
-
-    private void MCBan4(Player player, String sender, String reason) {
-        if (config.isGlobalBan()){
-            mcbAPI.globalBan(player.getName(), sender, reason);
-        }else{
-            mcbAPI.localBan(player.getName(), sender, reason);
-        }
-    }
-    private void MCBan4Kick(Player player, String sender, String reason) {
-        mcbAPI.kick(player.getName(), sender, reason);
     }
 
     private void EBkick(Player player, String reason) {

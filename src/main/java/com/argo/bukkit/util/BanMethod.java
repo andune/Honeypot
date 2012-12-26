@@ -1,9 +1,10 @@
 package com.argo.bukkit.util;
 
-public enum BansMethod {
+public enum BanMethod {
     EASYBAN,
     KABANS,
     UBAN,
     VANILLA,
-    MCBANS4
+    MCBANS,
+    ANY
 }

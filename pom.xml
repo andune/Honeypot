@@ -77,6 +77,12 @@
       <artifactId>MCBans</artifactId>
       <version>4.0</version>
     </dependency>
+
+    <dependency>
+      <groupId>org.reflections</groupId>
+      <artifactId>reflections</artifactId>
+      <version>0.9.8</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -123,6 +129,59 @@
             <goals>
               <goal>run</goal>
             </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>1.7.1</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <!--
+              <outputFile>${project.build.directory}/${project.artifactId}.jar</outputFile>
+              -->
+              <artifactSet>
+                <includes>
+                  <include>org.reflections:reflections</include>
+                  <include>dom4j:dom4j</include>
+                </includes>
+              </artifactSet>
+
+              <relocations>
+                <relocation>
+                  <pattern>org.reflections</pattern>
+                  <shadedPattern>${project.groupId}.reflections</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>dom4j</pattern>
+                  <shadedPattern>${project.groupId}.dom4j</shadedPattern>
+                </relocation>
+              </relocations>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.reflections</groupId>
+        <artifactId>reflections-maven</artifactId>
+        <version>0.9.8</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>reflections</goal>
+            </goals>
+            <phase>process-classes</phase>
+            <configuration>
+              <includeExclude>+com\.argo\.bukkit\.honeypot\..*,+com\.argo\.bukkit\.util\..*</includeExclude>
+            </configuration>
           </execution>
         </executions>
       </plugin>
@@ -209,5 +268,41 @@
         </configuration>
       </plugin>
     </plugins>
+
+    <pluginManagement>
+      <plugins>
+        <!--This plugin's configuration is used to store Eclipse m2e settings 
+          only. It has no influence on the Maven build itself. -->
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <!-- this silences a benign eclipse error related to org.reflections -->
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.reflections</groupId>
+                    <artifactId>
+                      reflections-maven
+                    </artifactId>
+                    <versionRange>
+                      [0.9.8,)
+                    </versionRange>
+                    <goals>
+                      <goal>reflections</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore></ignore>
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
 </project>

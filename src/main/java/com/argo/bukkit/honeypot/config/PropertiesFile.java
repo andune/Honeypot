@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.argo.bukkit.util.BanMethod;
 import com.argo.util.PropertyHandler;
 
 public class PropertiesFile implements Config {
@@ -130,5 +131,15 @@ public class PropertiesFile implements Config {
 	@Override
 	public Map<Integer, Integer> getBlockPointMap() {
 		return null;
+	}
+
+    /*  NOT SUPPORTED IN PROPERTIES FILE.
+     * 
+     * (non-Javadoc)
+     * @see com.argo.bukkit.honeypot.config.Config#getOffensePoints()
+     */
+	@Override
+	public BanMethod getBanSystem() {
+	    return null;
 	}
 }
