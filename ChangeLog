@@ -1,3 +1,9 @@
+v1.4.4 - Dec 26, 2012
+* refactor of ban subsystem, easier for others to contribute
+* fix for McBans 4.0, was broken in v1.4.3.2
+* addition of "custom" type so admins can support whatever ban plugin
+they want even if Honeypot doesn't have direct support for it.
+
 v1.4.3.2 - Dec 23, 2012
 * MCBans 4.0 compatibility (thanks @Syamn!)
 

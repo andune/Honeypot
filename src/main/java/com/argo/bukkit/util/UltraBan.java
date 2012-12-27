@@ -3,55 +3,19 @@
  */
 package com.argo.bukkit.util;
 
-import org.bukkit.Server;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
-
-import com.argo.bukkit.honeypot.Honeypot;
 
 /**
+ * Not entirely sure the ban command here seems right, but, it's what has
+ * been in MCBans for a long time now. If someone uses UltraBan and knows
+ * it should be different, please fix it and send me a gitpull.
+ * 
  * @author andune
  *
  */
-public class UltraBan implements BanHandler {
-    private Server server;
-    private Plugin ultrabanPlugin;
-    
-    @Override
-    public String getHandlerName() {
-        return "UltraBan";
-    }
-
-    @Override
-    public void init(Honeypot honeypotPlugin) {
-        this.server = honeypotPlugin.getServer();
-        ultrabanPlugin = server.getPluginManager().getPlugin("UltraBan");
-        if( ultrabanPlugin == null ) // Compatibility for old releases
-            ultrabanPlugin = server.getPluginManager().getPlugin("ultraban");
-    }
-    
-    @Override
-    public boolean isSupported() {
-        return ultrabanPlugin != null;
-    }
-    
-    @Override
-    public String getVersion() {
-        if( ultrabanPlugin != null )
-            return ultrabanPlugin.getDescription().getVersion();
-        else
-            return null;
-    }
-
-    @Override
-    public void ban(Player player, String sender, String reason) {
-        server.dispatchCommand(server.getConsoleSender(),
-                "eban " + player.getName() + " " + reason);
-    }
-
-    @Override
-    public void kick(Player player, String sender, String reason) {
-        server.dispatchCommand(server.getConsoleSender(),
-                "ekick " + player.getName() + " " + reason);
+public class UltraBan extends CommandBanHandler implements BanHandler {
+    public UltraBan() {
+        super("UltraBan",                       // plugin name
+                "ipban %player% %reason%",      // ban command
+                "kick %player% %reason%");      // kick command
     }
 }

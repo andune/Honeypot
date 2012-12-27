@@ -7,8 +7,6 @@ import java.util.Map;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.argo.bukkit.util.BanMethod;
-
 /** Interface for configuration implementations to use.  Created to allow a seamless code transition
  * between the old properties file and native Bukkit "config.yml" configurations.
  * 
@@ -30,8 +28,24 @@ public interface Config {
 	 * 
 	 * @return
 	 */
-	public BanMethod getBanSystem();
+	public String getBanSystem();
 	
+	/**
+	 * For the ban type "custom", this String defines the commmand
+	 * to be run when banning a player.
+	 * 
+	 * @return
+	 */
+	public String getCustomBanCommand();
+	
+    /**
+     * For the ban type "custom", this String defines the commmand
+     * to be run when kicking a player.
+     * 
+     * @return
+     */
+    public String getCustomKickCommand();
+
     public int getOffenseCount();
     
     /** The number of points required for a Honeypot ban (used only if != 0).  By default,

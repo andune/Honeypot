@@ -16,6 +16,28 @@ honeypotKickBanSender: '[Honeypot]'
 honeypotBanReason: Destroyed honeypot block.
 honeypotKickMessage: '[Honeypot] You have been caught destroying a honeypot block.'
 
+# valid types are:
+#   any - this will find any ban plugin Honyepot knows about and use it.
+#     This is the default and you generally shouldn't ever have to change
+#     it, but there are some other options if you want to force this
+#     setting (such as the custom type below).
+#   custom - this uses the custom commands below. The custom commands are
+#     ONLY used when this type is set, they are not used for the ANY type.
+#   mcbans - this forces Honeypot to use MCBans, if found
+#   vanilla - this will force Honeypot to use vanilla MC ban
+#   [etc] - there are a few other ban systems that Honeypot supports
+#     directly, they are named after the plugin itself, so just use the
+#     plugin name. If it can't find it, Honeypot falls back to Vanilla.
+banSystem: any
+
+# you can define a custom command to be run for a ban - 'banSystem' type
+# must be set to custom!
+customBanCommand: ban %player% %reason%
+# you can define a custom command to be run for a kick - 'banSystem' type
+# must be set to custom!
+customKickCommand: kick %player% %reason%
+
+
 # can be used in lieu of "offensePoints", is a simpler concept.
 # Basically counts each block break as one infraction so, for
 # example, you can require that 3 honeypot blocks must be broken
