@@ -36,7 +36,7 @@ public interface Config {
 	 * 
 	 * @return
 	 */
-	public String getCustomBanCommand();
+	public String[] getCustomBanCommands();
 	
     /**
      * For the ban type "custom", this String defines the commmand
@@ -44,7 +44,7 @@ public interface Config {
      * 
      * @return
      */
-    public String getCustomKickCommand();
+    public String[] getCustomKickCommands();
 
     public int getOffenseCount();
     

@@ -54,11 +54,14 @@ public class MCBans4 implements BanHandler {
         }else{
             mcbAPI.localBan(player.getName(), sender, reason);
         }
+
+        player.kickPlayer(config.getPotMsg());
     }
 
     @Override
     public void kick(Player player, String sender, String reason) {
         mcbAPI.kick(player.getName(), sender, reason);
+        player.kickPlayer(config.getPotMsg());
     }
 
 }
