@@ -6,14 +6,10 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
-
-import com.sk89q.worldedit.IncompleteRegionException;
-import com.sk89q.worldedit.bukkit.WorldEditPlugin;
-import com.sk89q.worldedit.regions.Region;
 
 public class CmdHoneypot implements CommandExecutor {
 	private Honeypot plugin;
+	private WorldEditIntegration worldEditIntegration;
 
     public CmdHoneypot(Honeypot instance) {
     	plugin = instance;
@@ -42,21 +38,10 @@ public class CmdHoneypot implements CommandExecutor {
         } else if(args.length == 1) {
             if( args[0].equalsIgnoreCase("region") ) {
                 if( sender instanceof Player ) {
-                    Player player = (Player) sender;
-                    Plugin plug = plugin.getServer().getPluginManager().getPlugin("WorldEdit");
-                    if( plug != null ) {
-                        WorldEditPlugin worldEdit = (WorldEditPlugin) plug;
-                        try {
-                            Region region = worldEdit.getSession(player).getSelection(worldEdit.getSession(player).getSelectionWorld());
-                            CuboidRegion cuboidRegion = new CuboidRegion(region, player.getWorld());
-                            Honeyfarm.createPot(cuboidRegion);
-                            Honeyfarm.saveData();
-                            sender.sendMessage(ChatColor.DARK_RED+"WorldEdit region recorded as a Honeypot");
-                        }
-                        catch(IncompleteRegionException ire) {
-                            sender.sendMessage(ChatColor.DARK_RED+"WorldEdit region incomplete");
-                        }
-                    }
+                	if( worldEditIntegration != null )
+                		worldEditIntegration = new WorldEditIntegration(plugin);
+                	
+                	worldEditIntegration.createNewHoneypotRegion((Player) sender);
                 } else {
                     sender.sendMessage("Sorry, this command can only be used by players.");
                 }
