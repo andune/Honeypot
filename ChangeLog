@@ -1,3 +1,10 @@
+v1.4.4.2 - Jan 11, 2013
+* added Bukkit-kick back to MCBans4 bans, solves issue of multiple bans due to
+MCBans delay processing the ban/kick
+* made "customBanCommand" and "customKickCommand" able to be either list or
+single string args. For lists, each command is run sequentially.
+* fix so Honeypot can load even if WorldEdit isn't on the server
+
 v1.4.4.1 - Dec 27, 2012
 * added 'honeypot.create' permission to region setting as well
 

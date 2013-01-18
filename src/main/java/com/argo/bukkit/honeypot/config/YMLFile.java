@@ -5,6 +5,7 @@ package com.argo.bukkit.honeypot.config;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -45,13 +46,31 @@ public class YMLFile implements Config {
     }
     
     @Override
-    public String getCustomBanCommand() {
-        return bukkitConfig.getString("customBanCommand", "ban %player% %reason%");
+    public String[] getCustomBanCommands() {
+    	// Look for multi-string version first, if none, fall back to
+    	// single-string version or default.
+    	List<String> cmds = bukkitConfig.getStringList("customBanCommand");
+    	
+    	if( cmds == null || cmds.isEmpty() ) {
+    		return new String[] { bukkitConfig.getString("customBanCommand", "ban %player% %reason%") };
+    	}
+    	else {
+    		return cmds.toArray(new String[] {});
+    	}
     }
     
     @Override
-    public String getCustomKickCommand() {
-        return bukkitConfig.getString("customKickCommand", "kick %player% %reason%");
+    public String[] getCustomKickCommands() {
+    	// Look for multi-string version first, if none, fall back to
+    	// single-string version or default.
+    	List<String> cmds = bukkitConfig.getStringList("customKickCommand");
+
+    	if( cmds == null || cmds.isEmpty() ) {
+    		return new String[] { bukkitConfig.getString("customKickCommand", "kick %player% %reason%") };
+    	}
+    	else {
+    		return cmds.toArray(new String[] {});
+    	}
     }
 
 	@Override

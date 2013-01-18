@@ -11,14 +11,14 @@ import com.argo.bukkit.honeypot.Honeypot;
  */
 public class CustomBanHandler extends CommandBanHandler implements BanHandler {
     public CustomBanHandler() {
-        super("Custom", null, null);
+        super("Custom", (String) null, (String) null);
     }
     
     @Override
     public void init(Honeypot plugin) {
         super.init(plugin);
-        super.banCmd = config.getCustomBanCommand();
-        super.kickCmd = config.getCustomKickCommand();
+        super.banCmds = config.getCustomBanCommands();
+        super.kickCmds = config.getCustomKickCommands();
     }
     
     /**

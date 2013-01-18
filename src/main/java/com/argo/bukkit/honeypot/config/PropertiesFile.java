@@ -139,10 +139,10 @@ public class PropertiesFile implements Config {
     /*  NOT SUPPORTED IN PROPERTIES FILE.
      */
     @Override
-	public String getCustomBanCommand() { return null; }
+	public String[] getCustomBanCommands() { return null; }
 
     /*  NOT SUPPORTED IN PROPERTIES FILE.
      */
     @Override
-    public String getCustomKickCommand() { return null; }
+    public String[] getCustomKickCommands() { return null; }
 }

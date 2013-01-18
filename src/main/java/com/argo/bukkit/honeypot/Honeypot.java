@@ -63,30 +63,6 @@ public class Honeypot extends JavaPlugin {
         BanHandlerFactory factory = new BanHandlerFactory(this, config);
         bansHandler = factory.getBansHandler();
         
-        /*
-        bansHandler = new OldBansHandler(this);
-        switch (bansHandler.setupbanHandler(this)) {
-            case VANILLA:
-            	log("Didn't find ban plugin, using vanilla.");
-                break;
-            case MCBANS4:
-                log("MCBans 4.0+ plugin found, using that.");
-                break;
-            case EASYBAN:
-                log("EasyBan plugin found, using that.");
-                break;
-            case KABANS:
-                log("KiwiAdmin plugin found, using that.");
-                break;
-            case UBAN:
-                log("UltraBan plugin found, using that.");
-                break;
-            default:
-                log("Didn't find ban plugin, using vanilla.");
-                break;
-        }
-        */
-
         getServer().getPluginManager().registerEvents(new HoneypotBlockListener(this), this);
         getServer().getPluginManager().registerEvents(new HoneypotPlayerListener(this), this);
 

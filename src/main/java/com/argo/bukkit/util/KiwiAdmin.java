@@ -16,8 +16,8 @@ package com.argo.bukkit.util;
 public class KiwiAdmin extends CommandBanHandler implements BanHandler {
     public KiwiAdmin() {
         super("KiwiAdmin",           // plugin name
-                null,                // ban command
-                null);               // kick command
+                (String) null,       // ban command
+                (String) null);      // kick command
     }
 
 }
