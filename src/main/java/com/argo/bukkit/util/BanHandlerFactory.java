@@ -8,7 +8,9 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 import org.reflections.Reflections;
+import org.reflections.util.FilterBuilder;
 
+import com.andune.minecraft.commonlib.reflections.YamlSerializer;
 import com.argo.bukkit.honeypot.Honeypot;
 import com.argo.bukkit.honeypot.config.Config;
 
@@ -28,7 +30,10 @@ public class BanHandlerFactory {
         this.config = config;
         this.log = plugin.getLogger();
 
-        this.reflections = Reflections.collect();
+//        this.reflections = Reflections.collect();
+        this.reflections = Reflections.collect("META-INF/reflections",
+                new FilterBuilder().include(".*-reflections.yml"),
+                new YamlSerializer());
     }
     
     /**
@@ -48,6 +53,7 @@ public class BanHandlerFactory {
         String banSystem = config.getBanSystem();
         Set<Class<? extends BanHandler>> set = reflections.getSubTypesOf(BanHandler.class);
         for(Class<? extends BanHandler> clazz : set) {
+            log.info("DEBUG: testing class "+clazz);
             // skip abstract classes
             if( Modifier.isAbstract(clazz.getModifiers()) )
                 continue;

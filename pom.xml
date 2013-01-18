@@ -32,19 +32,6 @@
   </repositories>
 
   <dependencies>
-    <!-- Required component -->
-    <dependency>
-      <groupId>com.nijiko</groupId>
-      <artifactId>permissions</artifactId>
-      <version>2.7</version>
-    </dependency>
-
-    <dependency>
-      <groupId>ru.tehkode</groupId>
-      <artifactId>PermissionsEx</artifactId>
-      <version>1.19.1</version>
-    </dependency>
-
     <!-- WorldEdit/WEPIF -->
     <dependency>
       <groupId>com.sk89q</groupId>
@@ -76,6 +63,13 @@
       <groupId>com.mcbans.firestar.mcbans</groupId>
       <artifactId>MCBans</artifactId>
       <version>4.0</version>
+    </dependency>
+
+    <!-- Common library -->
+    <dependency>
+      <groupId>com.andune.minecraft.commonlib</groupId>
+      <artifactId>commonlib</artifactId>
+      <version>0.4-SNAPSHOT</version>
     </dependency>
 
     <dependency>
@@ -144,24 +138,41 @@
               <goal>shade</goal>
             </goals>
             <configuration>
+<!--
+              <minimizeJar>true</minimizeJar>
+-->
               <!--
               <outputFile>${project.build.directory}/${project.artifactId}.jar</outputFile>
               -->
               <artifactSet>
                 <includes>
                   <include>org.reflections:reflections</include>
-                  <include>dom4j:dom4j</include>
+                  <include>com.google.code.gson:gson</include>
+                  <include>com.andune.minecraft.commonlib:commonlib</include>
                 </includes>
               </artifactSet>
+
+              <filters>
+                <filter>
+                  <artifact>com.andune.minecraft.commonlib:commonlib</artifact>
+                  <includes>
+                    <include>com/andune/minecraft/commonlib/reflections/YamlSerializer*</include>
+                  </includes>
+                </filter>
+              </filters>
 
               <relocations>
                 <relocation>
                   <pattern>org.reflections</pattern>
-                  <shadedPattern>${project.groupId}.reflections</shadedPattern>
+                  <shadedPattern>${project.groupId}.${project.artifactId}.reflections</shadedPattern>
                 </relocation>
                 <relocation>
-                  <pattern>dom4j</pattern>
-                  <shadedPattern>${project.groupId}.dom4j</shadedPattern>
+                  <pattern>com.google.gson</pattern>
+                  <shadedPattern>${project.groupId}.${project.artifactId}.com.google.gson</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>com.andune.minecraft.commonlib</pattern>
+                  <shadedPattern>${project.groupId}.${project.artifactId}.com.andune.minecraft.commonlib</shadedPattern>
                 </relocation>
               </relocations>
             </configuration>
@@ -181,9 +192,23 @@
             <phase>process-classes</phase>
             <configuration>
               <includeExclude>+com\.argo\.bukkit\.honeypot\..*,+com\.argo\.bukkit\.util\..*</includeExclude>
+              <serializer>com.andune.minecraft.commonlib.reflections.YamlSerializer</serializer>
+              <destinations>${project.build.outputDirectory}/META-INF/reflections/${project.artifactId}-reflections.yml</destinations>
             </configuration>
           </execution>
         </executions>
+        <dependencies>
+          <dependency>
+            <groupId>com.andune.minecraft.commonlib</groupId>
+            <artifactId>commonlib</artifactId>
+            <version>0.4-SNAPSHOT</version>
+          </dependency>
+          <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>1.9</version>
+          </dependency>
+        </dependencies>
       </plugin>
 
       <!-- Compile plugin -->
