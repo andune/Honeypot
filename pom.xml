@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.morganm</groupId>
   <artifactId>Honeypot</artifactId>
-  <version>1.4.4.2</version>
+  <version>1.4.4.3</version>
   <name>Honeypot</name>
   <description>HoneyPot plugin for catching griefers automatically</description>
   <url>http://dev.bukkit.org/server-mods/Honeypot/</url>
@@ -69,7 +69,7 @@
     <dependency>
       <groupId>com.andune.minecraft.commonlib</groupId>
       <artifactId>commonlib</artifactId>
-      <version>0.4-SNAPSHOT</version>
+      <version>0.4</version>
     </dependency>
 
     <dependency>
@@ -201,7 +201,7 @@
           <dependency>
             <groupId>com.andune.minecraft.commonlib</groupId>
             <artifactId>commonlib</artifactId>
-            <version>0.4-SNAPSHOT</version>
+            <version>0.4</version>
           </dependency>
           <dependency>
             <groupId>org.yaml</groupId>
