@@ -5,3 +5,4 @@ lib
 .project
 target
 .settings
+dependency-reduced-pom.xml
