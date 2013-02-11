@@ -38,7 +38,7 @@ public class CmdHoneypot implements CommandExecutor {
         } else if(args.length == 1) {
             if( args[0].equalsIgnoreCase("region") ) {
                 if( sender instanceof Player ) {
-                	if( worldEditIntegration != null )
+                	if( worldEditIntegration == null )
                 		worldEditIntegration = new WorldEditIntegration(plugin);
                 	
                 	worldEditIntegration.createNewHoneypotRegion((Player) sender);
