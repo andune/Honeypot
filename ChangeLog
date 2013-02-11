@@ -1,3 +1,6 @@
+v1.4.4.3 - Feb 10, 2013
+* fix reported issues with "/hp region" command
+
 v1.4.4.2 - Jan 11, 2013
 * added Bukkit-kick back to MCBans4 bans, solves issue of multiple bans due to
 MCBans delay processing the ban/kick
