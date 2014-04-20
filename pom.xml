@@ -3,31 +3,33 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.morganm</groupId>
+  <groupId>com.andune</groupId>
   <artifactId>Honeypot</artifactId>
-  <version>1.4.4.3</version>
+  <version>1.4.5-SNAPSHOT</version>
   <name>Honeypot</name>
   <description>HoneyPot plugin for catching griefers automatically</description>
   <url>http://dev.bukkit.org/server-mods/Honeypot/</url>
 
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
+    <build.number>${maven.build.timestamp}</build.number>
+  </properties>
+
   <scm>
-    <connection>scm:git:git://github.com/morganm/Honeypot.git</connection>
-    <url>https://github.com/morganm/Honeypot</url>
-    <developerConnection>scm:git:git@github.com:morganm/Honeypot.git</developerConnection>
+    <connection>scm:git:git://github.com/andune/Honeypot.git</connection>
+    <url>https://github.com/andune/Honeypot</url>
+    <developerConnection>scm:git:git@github.com:andune/Honeypot.git</developerConnection>
   </scm>
 
   <repositories>
     <repository>
-      <id>morganm-repo</id>
-      <url>http://morganmc.dyndns.org/nexus/content/groups/public/</url>
+      <id>andune-repo</id>
+      <url>http://andune.com/nexus/content/groups/public/</url>
     </repository>
     <repository>
       <id>bukkit-repo</id>
       <url>http://repo.bukkit.org/content/groups/public/</url>
-    </repository>
-    <repository>
-      <id>repobo-snap</id>
-      <url>http://repo.bukkit.org/content/groups/public</url>
     </repository>
   </repositories>
 
@@ -36,7 +38,7 @@
     <dependency>
       <groupId>com.sk89q</groupId>
       <artifactId>worldedit</artifactId>
-      <version>5.3</version>
+      <version>5.6.1</version>
       <exclusions>
         <exclusion>
           <groupId>org.spout</groupId>
@@ -48,28 +50,28 @@
     <dependency>
       <groupId>net.milkbowl.vault</groupId>
       <artifactId>Vault</artifactId>
-      <version>1.2.15</version>
+      <version>1.2.31</version>
     </dependency>
 
     <!-- Bukkit -->
     <dependency>
       <groupId>org.bukkit</groupId>
       <artifactId>bukkit</artifactId>
-      <version>1.4.6-R0.1</version>
+      <version>1.7.2-R0.3</version>
     </dependency>
 
     <!-- Ban plugin dependencies -->
     <dependency>
-      <groupId>com.mcbans.firestar.mcbans</groupId>
-      <artifactId>MCBans</artifactId>
-      <version>4.0</version>
+      <groupId>com.mcbans.firestar</groupId>
+      <artifactId>mcbans</artifactId>
+      <version>4.3-SNAPSHOT</version>
     </dependency>
 
     <!-- Common library -->
     <dependency>
       <groupId>com.andune.minecraft.commonlib</groupId>
       <artifactId>commonlib</artifactId>
-      <version>0.4</version>
+      <version>0.6-SNAPSHOT</version>
     </dependency>
 
     <dependency>
@@ -90,14 +92,6 @@
         <directory>${basedir}/src/main/resources/</directory>
       </resource>
       <resource>
-        <targetPath>.</targetPath>
-        <directory>${basedir}</directory>
-        <filtering>true</filtering>
-        <includes>
-          <include>build.number</include>
-        </includes>
-      </resource>
-      <resource>
         <directory>src/main/resources</directory>
         <filtering>true</filtering>
         <includes>
@@ -110,25 +104,6 @@
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <version>1.7</version><!--$NO-MVN-MAN-VER$-->
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <configuration>
-              <target>
-                <buildnumber />
-              </target>
-            </configuration>
-            <goals>
-              <goal>run</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
         <version>1.7.1</version>
         <executions>
@@ -138,16 +113,9 @@
               <goal>shade</goal>
             </goals>
             <configuration>
-<!--
-              <minimizeJar>true</minimizeJar>
--->
-              <!--
-              <outputFile>${project.build.directory}/${project.artifactId}.jar</outputFile>
-              -->
               <artifactSet>
                 <includes>
                   <include>org.reflections:reflections</include>
-                  <include>com.google.code.gson:gson</include>
                   <include>com.andune.minecraft.commonlib:commonlib</include>
                 </includes>
               </artifactSet>
@@ -157,6 +125,9 @@
                   <artifact>com.andune.minecraft.commonlib:commonlib</artifact>
                   <includes>
                     <include>com/andune/minecraft/commonlib/reflections/YamlSerializer*</include>
+                    <include>com/andune/minecraft/commonlib/JarUtils*</include>
+                    <include>com/andune/minecraft/commonlib/Logger*</include>
+                    <include>com/andune/minecraft/commonlib/log/*</include>
                   </includes>
                 </filter>
               </filters>
@@ -165,10 +136,6 @@
                 <relocation>
                   <pattern>org.reflections</pattern>
                   <shadedPattern>${project.groupId}.${project.artifactId}.reflections</shadedPattern>
-                </relocation>
-                <relocation>
-                  <pattern>com.google.gson</pattern>
-                  <shadedPattern>${project.groupId}.${project.artifactId}.com.google.gson</shadedPattern>
                 </relocation>
                 <relocation>
                   <pattern>com.andune.minecraft.commonlib</pattern>
@@ -226,31 +193,6 @@
         </configuration>
       </plugin>
 
-<!--
-      <plugin>
-          <groupId>com.google.code.maven-replacer-plugin</groupId>
-          <artifactId>maven-replacer-plugin</artifactId>
-          <version>1.3.8</version>
-          <executions>
-              <execution>
-                  <phase>prepare-package</phase>
-                  <goals>
-                      <goal>replace</goal>
-                  </goals>
-              </execution>
-          </executions>
-          <configuration>
-              <file>target/classes/plugin.yml</file>
-              <replacements>
-                  <replacement>
-                      <token>maven-version-number</token>
-                      <value>${project.version}-b${project.build.number}</value>
-                  </replacement>
-              </replacements>
-          </configuration>
-      </plugin>
--->
-
       <!-- JAR creation plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -264,22 +206,11 @@
               <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
             </manifest>
             <manifestEntries>
-              <Implementation-Build>${buildNumber}</Implementation-Build>
+              <Implementation-Build>${build.number}</Implementation-Build>
             </manifestEntries>
           </archive>
         </configuration>
       </plugin>
-
-      <!-- Assembly -->
-<!--
-      <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>2.2-beta-2</version>
-        <configuration>
-          <descriptor>${basedir}/src/main/assembly/default.xml</descriptor>
-        </configuration>
-      </plugin>
--->
 
       <!-- Release -->
       <plugin>

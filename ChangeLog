@@ -1,3 +1,7 @@
+v1.4.5 - 
+* Merge PR for MCBans4 support for UUIDs (thanks firestar!)
+* update build numbers to be compliant with CI (Jenkins)
+
 v1.4.4.3 - Feb 10, 2013
 * fix reported issues with "/hp region" command
 

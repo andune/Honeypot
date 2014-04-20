@@ -3,6 +3,7 @@ package com.argo.bukkit.honeypot;
 import java.io.File;
 import java.util.logging.Logger;
 
+import com.andune.minecraft.commonlib.JarUtils;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -15,7 +16,6 @@ import com.argo.bukkit.honeypot.listener.HoneypotBlockListener;
 import com.argo.bukkit.honeypot.listener.HoneypotPlayerListener;
 import com.argo.bukkit.util.BanHandler;
 import com.argo.bukkit.util.BanHandlerFactory;
-import com.argo.bukkit.util.JarUtils;
 import com.argo.bukkit.util.PermissionSystem;
 
 public class Honeypot extends JavaPlugin {
@@ -29,7 +29,7 @@ public class Honeypot extends JavaPlugin {
     private BanHandler bansHandler;
     private PermissionSystem perm;
     private JarUtils jarUtils;
-	private int buildNumber = -1;
+	private String buildNumber = "unknown";
 
     public void log(final String message) {
     	log.info(logPrefix+message);
@@ -71,8 +71,8 @@ public class Honeypot extends JavaPlugin {
         // schedule to run every minute (20 ticks * 60 seconds)
         getServer().getScheduler().scheduleSyncRepeatingTask(this, honeyStack, 1200, 1200);
 
-    	jarUtils = new JarUtils(this, getFile(), log, logPrefix);
-		buildNumber = jarUtils.getBuildNumber();
+        jarUtils = new JarUtils(getDataFolder(), getFile());
+		buildNumber = jarUtils.getBuild();
         PluginDescriptionFile pdf = this.getDescription();
 		log("version "+pdf.getVersion()+", build "+buildNumber+" is enabled");
     }
