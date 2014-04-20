@@ -1,4 +1,4 @@
-v1.4.5 - 
+v1.4.5 - Apr 20, 2014
 * Merge PR for MCBans4 support for UUIDs (thanks firestar!)
 * update build numbers to be compliant with CI (Jenkins)
 
