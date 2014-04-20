@@ -50,9 +50,9 @@ public class MCBans4 implements BanHandler {
     @Override
     public void ban(Player player, String sender, String reason) {
         if (config.isGlobalBan()){
-            mcbAPI.globalBan(player.getName(), sender, reason);
+            mcbAPI.globalBan(player.getName(), player.getUniqueId().toString(), sender, "", reason);
         }else{
-            mcbAPI.localBan(player.getName(), sender, reason);
+            mcbAPI.localBan(player.getName(), player.getUniqueId().toString(), sender, "", reason);
         }
 
         player.kickPlayer(config.getPotMsg());
@@ -60,7 +60,7 @@ public class MCBans4 implements BanHandler {
 
     @Override
     public void kick(Player player, String sender, String reason) {
-        mcbAPI.kick(player.getName(), sender, reason);
+        mcbAPI.kick(player.getName(), player.getUniqueId().toString(), sender, "", reason);
         player.kickPlayer(config.getPotMsg());
     }
 
