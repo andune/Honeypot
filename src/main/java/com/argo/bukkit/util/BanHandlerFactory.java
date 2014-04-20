@@ -53,7 +53,7 @@ public class BanHandlerFactory {
         String banSystem = config.getBanSystem();
         Set<Class<? extends BanHandler>> set = reflections.getSubTypesOf(BanHandler.class);
         for(Class<? extends BanHandler> clazz : set) {
-            log.info("DEBUG: testing class "+clazz);
+            log.fine("DEBUG: testing class "+clazz);
             // skip abstract classes
             if( Modifier.isAbstract(clazz.getModifiers()) )
                 continue;
